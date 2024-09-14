@@ -2,3 +2,4 @@
 datasets/
 detection/yolov*/
 detection/.v5env/
+detection/.v8env/
