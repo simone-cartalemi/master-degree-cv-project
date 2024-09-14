@@ -15,6 +15,12 @@ Installare le dipendenze mediante il comando
 pip install -r yolov5/requirements.txt
 ```
 
+Per controllare che tutto sia stato installato correttamente, e verificare il dispositivo su cui saranno eseguiti i calcoli (CPU o GPU) lanciare i comandi
+```sh
+./detection/.v5env/Scripts/activate
+python ./detection/src/test/check_yolov5.py
+```
+
 
 
 ## Setup della versione 8
@@ -25,7 +31,9 @@ Dopo aver attivato l'enviroment, eseguire il comando
 pip install ultralytics==8.0.196
 ```
 
-Per controllare che tutto sia stato installato correttamente, e verificare il dispositivo su cui saranno eseguiti i calcoli (CPU o GPU) lanciare il comando 
+Per controllare che tutto sia stato installato correttamente, e verificare il dispositivo su cui saranno eseguiti i calcoli (CPU o GPU) lanciare i comandi
 ```sh
+./detection/.v8env/Scripts/activate
 python ./detection/src/test/check_yolov8.py
 ```
+
