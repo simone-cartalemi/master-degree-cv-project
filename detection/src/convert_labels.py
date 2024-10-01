@@ -90,7 +90,7 @@ class GramDataset(Dataset):
 
         return objs
 
-    def _get_labels(self, labels_path):
+    def get_labels(self, labels_path):
         '''
         Prende il path di una cartella che contiene file xml di annotazioni e restituisce un dict del tipo {"img": [obj]}
         '''
