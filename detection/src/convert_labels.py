@@ -132,9 +132,9 @@ def save_labels(output_file_path, labels):
 
 
 if __name__ == "__main__":
-    dataset_name = int(sys.argv[1])
-    images_folder_path = int(sys.argv[2])
-    labels_path = int(sys.argv[3])
+    dataset_name = str(sys.argv[1])
+    images_folder_path = str(sys.argv[2])
+    labels_path = str(sys.argv[3])
     labels_out_path = os.path.join(images_folder_path, "../labels/")
     os.makedirs(labels_out_path, exist_ok=True)
 
@@ -149,6 +149,10 @@ if __name__ == "__main__":
     labels = Ds.get_labels(labels_path)
     for img_name, objs in tqdm(labels.items()):
         img_path = os.path.join(images_folder_path, img_name + '.jpg')
+
+        if not os.path.isfile(img_path):
+            continue
+    
         new_labels_path = os.path.join(labels_out_path, img_name + '.txt')
         new_labels = yolo_format(img_path, objs)
         save_labels(new_labels_path, new_labels)
