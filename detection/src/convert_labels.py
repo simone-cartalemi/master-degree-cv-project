@@ -103,7 +103,7 @@ class GramDataset(Dataset):
         labels_data = {}
         for annotations in annotation_paths:
             img_name = annotations.replace('.xml', '')
-            labels_data[img_name] = self.read_xml(annotations)
+            labels_data[img_name] = self.read_xml(os.path.join(labels_path, annotations))
         
         return labels_data
 
