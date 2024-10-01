@@ -3,6 +3,7 @@ import sys
 import shutil
 import random
 from pathlib import Path
+from tqdm import tqdm
 
 def split_dataset(dataset_path, train_ratio=0.8):
     # Percorsi alle sottocartelle
@@ -43,15 +44,18 @@ def split_dataset(dataset_path, train_ratio=0.8):
 
     # Copia i file nella cartella corrispondente
     print(f"{len(train_pairs)} in train")
-    for img_file, lbl_file in train_pairs:
+    for img_file, lbl_file in tqdm(train_pairs):
         shutil.move(os.path.join(images_dir, img_file), os.path.join(train_images_dir, img_file))
         shutil.move(os.path.join(labels_dir, lbl_file), os.path.join(train_labels_dir, lbl_file))
 
     print(f"{len(val_pairs)} in val")
-    for img_file, lbl_file in val_pairs:
+    for img_file, lbl_file in tqdm(val_pairs):
         shutil.move(os.path.join(images_dir, img_file), os.path.join(val_images_dir, img_file))
         shutil.move(os.path.join(labels_dir, lbl_file), os.path.join(val_labels_dir, lbl_file))
 
 if __name__ == "__main__":
-    full_data_path = int(sys.argv[1])
-    split_dataset(full_data_path, train_ratio=0.8)
+    full_data_path = str(sys.argv[1])
+    ratio = 0.8
+    if len(sys.argv) > 2:
+        ratio = float(sys.argv[2])
+    split_dataset(full_data_path, train_ratio=ratio)
