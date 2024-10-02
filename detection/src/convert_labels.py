@@ -74,6 +74,8 @@ class GramDataset(Dataset):
                 obj["class"] = self.VEHICLE_CLASSES["motorcycle"]
             elif cls == "big-truck":
                 obj["class"] = self.VEHICLE_CLASSES["truck"]
+            elif cls == "bus":
+                obj["class"] = self.VEHICLE_CLASSES["truck"]
             else:
                 print("Classe non prevista:", cls)
             obj["id"] = child.find("ID").text
