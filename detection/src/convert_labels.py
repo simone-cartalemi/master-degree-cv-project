@@ -90,6 +90,17 @@ class GramDataset(Dataset):
 
         return objs
 
+    def compose_name(self, annotation_name):
+        '''
+        Costruisce il nome dell'immagine a partire dal nome del file xml di annotazione.
+        Nota che il file 0.xml corrisponde al file image000001.jpg
+        '''
+
+        img_name = annotation_name.replace('.xml', '')
+        img_name = str(int(img_name) + 1)
+        name = "image000000"
+        return name[:-len(img_name)] + img_name
+
     def get_labels(self, labels_path):
         '''
         Prende il path di una cartella che contiene file xml di annotazioni e restituisce un dict del tipo {"img": [obj]}
@@ -102,7 +113,7 @@ class GramDataset(Dataset):
 
         labels_data = {}
         for annotations in annotation_paths:
-            img_name = annotations.replace('.xml', '')
+            img_name = self.compose_name(annotations)
             labels_data[img_name] = self.read_xml(os.path.join(labels_path, annotations))
         
         return labels_data
