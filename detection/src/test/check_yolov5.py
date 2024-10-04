@@ -4,11 +4,18 @@ import cv2
 import torch
 
 import pathlib
-temp = pathlib.PosixPath
-pathlib.PosixPath = pathlib.WindowsPath
+import os
+
+if os.name == 'nt':
+    temp = pathlib.PosixPath
+    pathlib.PosixPath = pathlib.WindowsPath
+
 
 def load_yolo_model(weights_path):
-    model = torch.hub.load('detection/yolov5', 'custom', path=weights_path, source='local', verbose=False)
+    try:
+        model = torch.hub.load('detection/yolov5', 'custom', path=weights_path, source='local', verbose=False)
+    except:
+        model = torch.hub.load('ultralytics/yolov5', model='yolov5n', verbose=False)
     model.eval()
     return model
 
@@ -21,4 +28,4 @@ example_image = cv2.imread('./detection/src/test/example.png')
 
 results = model(example_image)
 
-print(results)
+results.print()
