@@ -1,5 +1,6 @@
 .pyenv/
-datasets/
+datasets/*
+!datasets/*.sh
 detection/yolov*/
 detection/.v5env/
 detection/.v8env/

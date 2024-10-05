@@ -44,13 +44,27 @@ Copiare i file scaricati all'interno della cartella `datasets/`.\
 
 
     ### GRAM
-    Dopo aver scaricato gli archivi zip, estrarli in sequenza in modo tale che i dataset siano inclusi all'interno della cartella `datasets/GRAM-RTMv4/Images/`. Le annotazioni, le maschere ROI e gli altri file saranno presenti all'interno di `datasets/GRAM-RTMv4/`
+    >Per automatizzare l'intero processo di scaricamento e gestione spiegato qui di seguito è stato creato un file .sh da eseguire con i comandi seguenti, altrimenti procedere con la modalità manuale.\
+    >**⚠️ Lo script esegue anche labeling e splitting con il comando `python`**
+    >```sh
+    >chmod +x ./datasets/prepare_gram.sh
+    >bash ./datasets/prepare_gram.sh
+    >```
+
+    Scaricare i tre archivi zip con il comando seguente.
+    ```sh
+    nome_dataset=GRAM-RTMv4
+    url_dataset=<url>
+    wget -O datasets/"$nome_dataset".zip -l 1 "$url_dataset"
+    ```
+
+    Dopo aver scaricato gli archivi, estrarli in sequenza in modo tale che i dataset siano inclusi all'interno della cartella `datasets/GRAM-RTMv4/Images/`. Le annotazioni, le maschere ROI e gli altri file saranno presenti all'interno di `datasets/GRAM-RTMv4/`
 
     ```sh
-    unzip GRAM-RTMv4.zip -d datasets/
-    unzip m30.zip -d datasets/GRAM-RTMv4/Images/
-    unzip m30hd.zip -d datasets/GRAM-RTMv4/Images/
-    unzip urban1.zip -d datasets/GRAM-RTMv4/Images/
+    unzip datasets/GRAM-RTMv4.zip -d datasets/
+    unzip datasets/GRAM-RTMv4/M-30.zip -d datasets/GRAM-RTMv4/Images/
+    unzip datasets/GRAM-RTMv4/M-30-HD.zip -d datasets/GRAM-RTMv4/Images/
+    unzip datasets/GRAM-RTMv4/Urban1.zip -d datasets/GRAM-RTMv4/Images/
     ```
 
     Per convertire le label nel formato richiesto è necessario cambiare un po' la struttura delle cartelle per tutti e tre i dataset `M-30`, `M-30-HD` e `Urban1`.
@@ -76,19 +90,26 @@ Copiare i file scaricati all'interno della cartella `datasets/`.\
 
 
     ### MIO-TCD Dataset
+    >Per automatizzare l'intero processo di scaricamento e gestione spiegato qui di seguito è stato creato un file .sh da eseguire con i comandi seguenti, altrimenti procedere con la modalità manuale.\
+    >**⚠️ Lo script esegue anche labeling e splitting con il comando `python`**
+    >```sh
+    >chmod +x ./datasets/prepare_mio.sh
+    >bash ./datasets/prepare_mio.sh
+    >```
 
-    Estrarre i file tar scaricato con il comando
+    Scaricare ed estrarre il file tar con i comandi
     ```sh
+    curl -L "<url_dataset>" -o ./datasets/MIO-TCD-Localization.tar
     tar -xvf MIO-TCD-Localization.tar -C datasets/
     ```
 
-    Il dataset estratto è diviso in due cartelle `train/` e `test/`. I file della cartella `train/` hanno una corrispondenza con i record del file `gt_train.csv`. Quindi per convertire le label eseguire il comando seguente.
+    Il dataset estratto è diviso in due cartelle `train/` e `test/`. I file della cartella `train/` hanno una corrispondenza con i record del file `gt_train.csv`. Rinominare `train/` in `images/`, quindi convertire le label eseguendo il comando seguente.
 
     ```sh
-    python ./detection/src/convert_labels.py mio-tcd ./datasets/MIO-TCD-Localization/train/ ./datasets/MIO-TCD-Localization/gt_train.csv
+    python ./detection/src/convert_labels.py mio-tcd ./datasets/MIO-TCD-Localization/images/ ./datasets/MIO-TCD-Localization/gt_train.csv
     ```
 
-    Rinominare `train/` in `images/` prima di eseguire lo split. Effettua la divisione randomica del dataset, impostando un rate per il validation set a 80%
+    Effettua la divisione randomica del dataset, impostando un rate per il validation set a 80%
     ```sh
     # Sostituire <split_rate> con un float (0.8 suggerito)
     python ./detection/src/split.py ./datasets/MIO-TCD-Localization/ <split_rate>
