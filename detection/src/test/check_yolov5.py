@@ -15,6 +15,7 @@ def load_yolo_model(weights_path):
     try:
         model = torch.hub.load('detection/yolov5', 'custom', path=weights_path, source='local', verbose=False)
     except:
+        os.makedirs("./detection/weights/yolo v5/", exist_ok=True)
         model = torch.hub.load('ultralytics/yolov5', model='yolov5n', verbose=False)
     model.eval()
     return model

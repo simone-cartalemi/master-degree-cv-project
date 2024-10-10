@@ -1,13 +1,19 @@
 # Check Yolo v8 version
 import cv2
 
+import os
+
 import ultralytics
 ultralytics.checks()
 
 from ultralytics import YOLO
 
 def load_yolo_model(weights_path):
-    model = YOLO(weights_path)
+    try:
+        model = YOLO(weights_path)
+    except:
+        os.makedirs("./detection/weights/yolo v8/", exist_ok=True)
+        model = YOLO()
     return model
 
 
