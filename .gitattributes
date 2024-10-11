@@ -4,6 +4,7 @@
 *.gif binary
 *.psd binary
 *.pdf binary
+*.ggb binary
 *.pt binary
 *.npy binary
 *.ggb binary
