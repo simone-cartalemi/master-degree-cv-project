@@ -1,4 +1,4 @@
-from dataset import Dataset
+from dataset.dataset import Dataset
 
 import os
 import xml.etree.ElementTree as ET
