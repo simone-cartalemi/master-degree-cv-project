@@ -1,9 +1,9 @@
 import numpy as np
 
 MODELS = ["v5m_gram", "v5m_mio", "v8s_mio"]
-V5_GRAM_WEIGHTS_PATH = "detection/weights/yolo v5/gram/best.pt"
-V5_MIO_WEIGHTS_PATH = "detection/weights/yolo v5/mio/best.pt"
-V8_MIO_WEIGHTS_PATH = "detection/weights/yolo v8/mio/best.pt"
+V5_GRAM_WEIGHTS_PATH = "detection/weights/yolo v5/gram/exp/weights/best.pt"
+V5_MIO_WEIGHTS_PATH = "detection/weights/yolo v5/mio/exp/weights/best.pt"
+V8_MIO_WEIGHTS_PATH = "detection/weights/yolo v8/train/weights/best.pt"
 
 
 #BENCHMARK_PATH = "../datasets/thai/"
