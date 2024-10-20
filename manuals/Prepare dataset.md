@@ -76,14 +76,14 @@ Copiare i file scaricati all'interno della cartella `datasets/`.\
     mkdir ./datasets/GRAM-RTMv4/Images/"$dataset_name"/
     mv ./datasets/GRAM-RTMv4/Images/images/ ./datasets/GRAM-RTMv4/Images/"$dataset_name"/images/
 
-    python ./detection/src/convert_labels.py gram ./datasets/GRAM-RTMv4/Images/"$dataset_name"/images/ ./datasets/GRAM-RTMv4/Annotations/"$dataset_name"/xml/
+    python ./src/convert_labels.py gram ./datasets/GRAM-RTMv4/Images/"$dataset_name"/images/ ./datasets/GRAM-RTMv4/Annotations/"$dataset_name"/xml/
     ```
 
     Ora è possibile effettuare lo split (0.8 è il valore di default).
 
     ```sh
     # Per ognuna delle tre cartelle eseguire questo comando sostituendo <dataset_name> e <split_rate> con un float (0.8 suggerito)
-    python ./detection/src/split.py ./datasets/GRAM-RTMv4/Images/"$dataset_name"/ <split_rate>
+    python ./src/split.py ./datasets/GRAM-RTMv4/Images/"$dataset_name"/ <split_rate>
     ```
 
     ℹ️   Nel caso in cui si voglia fare un merge dei tre dataset per crearne uno più corposo, si ricorda che è necessario rinominare i file nel modo adeguato.
@@ -106,19 +106,19 @@ Copiare i file scaricati all'interno della cartella `datasets/`.\
     Il dataset estratto è diviso in due cartelle `train/` e `test/`. I file della cartella `train/` hanno una corrispondenza con i record del file `gt_train.csv`. Rinominare `train/` in `images/`, quindi convertire le label eseguendo il comando seguente.
 
     ```sh
-    python ./detection/src/convert_labels.py mio-tcd ./datasets/MIO-TCD-Localization/images/ ./datasets/MIO-TCD-Localization/gt_train.csv
+    python ./src/convert_labels.py mio-tcd ./datasets/MIO-TCD-Localization/images/ ./datasets/MIO-TCD-Localization/gt_train.csv
     ```
 
     Effettua la divisione randomica del dataset, impostando un rate per il validation set a 80%
     ```sh
     # Sostituire <split_rate> con un float (0.8 suggerito)
-    python ./detection/src/split.py ./datasets/MIO-TCD-Localization/ <split_rate>
+    python ./src/split.py ./datasets/MIO-TCD-Localization/ <split_rate>
     ```
 
 
 
 4.  **Verifica della correttezza dei Bounding Box [opzionale]:** Questo comando permette di fare un check sulle label dei dataset, visualizzando i bounding box.
     ```sh
-    # Sostituire <dataset_name> e <index_img>
-    python ./detection/test/check_bndbox.py ./datasets/gram/<dataset_name>/images/ <index_img>
+    # Sostituire <dataset_name> (assicurarsi che il path sia corretto) e <index_img>
+    python ./detection/test/check_bndbox.py ./datasets/<dataset_name>/images/ <index_img>
     ```

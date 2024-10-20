@@ -33,6 +33,6 @@ done
 
 # Esegui labeling e splitting
 for dataset_name in "${dataset_names[@]}"; do
-    python ./detection/src/convert_labels.py gram ./datasets/GRAM-RTMv4/Images/"$dataset_name"/images/ ./datasets/GRAM-RTMv4/Annotations/"$dataset_name"/xml/
-    python ./detection/src/split.py ./datasets/GRAM-RTMv4/Images/"$dataset_name"/ 0.8
+    python ./src/convert_labels.py gram ./datasets/GRAM-RTMv4/Images/"$dataset_name"/images/ ./datasets/GRAM-RTMv4/Annotations/"$dataset_name"/xml/
+    python ./src/split.py ./datasets/GRAM-RTMv4/Images/"$dataset_name"/ 0.8
 done
