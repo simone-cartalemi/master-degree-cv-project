@@ -120,5 +120,5 @@ Copiare i file scaricati all'interno della cartella `datasets/`.\
 4.  **Verifica della correttezza dei Bounding Box [opzionale]:** Questo comando permette di fare un check sulle label dei dataset, visualizzando i bounding box.
     ```sh
     # Sostituire <dataset_name> e <index_img>
-    python ./detection/src/test/check_bndbox.py ./datasets/gram/<dataset_name>/images/ <index_img>
+    python ./detection/test/check_bndbox.py ./datasets/gram/<dataset_name>/images/ <index_img>
     ```
