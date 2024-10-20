@@ -72,8 +72,6 @@ def detect_video(video_path, yolo, mask, silent: bool = False) -> list:
     return history
 
 
-
-
 if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Missing arguments. Please use command:\ntrack_vehicles.py v5m_gram|v5m_mio|v8s_mio single_video|folder_path")
@@ -115,13 +113,9 @@ if __name__ == "__main__":
     roi_mask = cv2.imread(MASK_PATH, cv2.IMREAD_GRAYSCALE)
     mask = cv2.threshold(roi_mask, 127, 255, cv2.THRESH_BINARY)[1]
     
-    fatti = 0
+    # For each video detect and save results
     for video_file in video_list:
-        if fatti < 0:
-            fatti += 1
-            continue
         video_path = os.path.join(folder_path, video_file)
         history = detect_video(video_path, yolo, mask=mask)
-        #break   # fa solo il primo video
 
         export_results(output_folder, os.path.splitext(video_file)[0], history)

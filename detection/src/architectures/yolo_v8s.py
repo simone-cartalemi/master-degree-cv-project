@@ -29,4 +29,3 @@ class YOLO8(YOLO):
                     class_ids.append(cls)
 
         return np.array(boxes), class_ids, confidences
-

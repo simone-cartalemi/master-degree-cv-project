@@ -6,7 +6,7 @@ V5_MIO_WEIGHTS_PATH = "detection/weights/yolo v5/mio/exp/weights/best.pt"
 V8_MIO_WEIGHTS_PATH = "detection/weights/yolo v8/train/weights/best.pt"
 
 
-#BENCHMARK_PATH = "../datasets/thai/"
+#BENCHMARK_PATH = "datasets/thai/"
 VIDEO_RESOLUTION = (1920, 1080)
 VIDEO_FRAME_PER_SECOND = 120
 VIDEO_FORMAT = ".mov"
@@ -23,5 +23,3 @@ EMISSION_COEFFICIENTS = {
     "diesel": (0.00580262, 0.00063457, 6.4831E-06, -1.446E-07, 2.3284E-09, -1.71E-11, 5.0932E-14),
     "petrol": (0.01185506, 0.00034041, 1.2578E-06, 1.0459E-07, -7.213E-10, 6.0958E-12, 0)
 }
-
-
