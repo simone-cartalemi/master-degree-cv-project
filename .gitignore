@@ -2,5 +2,10 @@
 datasets/*
 !datasets/*.sh
 detection/yolov*/
+detection/weights/yolo v*/*
+!detection/weights/yolo v*/README.md
 detection/.v5env/
 detection/.v8env/
+yolov*.pt
+experiments/**
+**/__pycache__/

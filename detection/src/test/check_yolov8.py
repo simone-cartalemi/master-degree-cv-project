@@ -17,7 +17,7 @@ def load_yolo_model(weights_path):
     return model
 
 
-weights_yolo8 = './detection/weights/yolo v8/best.pt'
+weights_yolo8 = './detection/weights/yolo v8/train/weights/best.pt'
 
 model = load_yolo_model(weights_yolo8)
 

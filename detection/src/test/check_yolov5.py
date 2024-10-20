@@ -21,7 +21,7 @@ def load_yolo_model(weights_path):
     return model
 
 
-weights_yolo5 = './detection/weights/yolo v5/best.pt'
+weights_yolo5 = './detection/weights/yolo v5/mio/exp/weights/best.pt'
 
 model = load_yolo_model(weights_yolo5)
 
