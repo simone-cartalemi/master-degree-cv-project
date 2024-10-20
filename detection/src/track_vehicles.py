@@ -14,7 +14,7 @@ from sort.sort import Sort
 
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
-from config.defaults import MODELS, MASK_PATH, V5_GRAM_WEIGHTS_PATH, V8_MIO_WEIGHTS_PATH, VIDEO_FORMAT, RESULTS_PATH
+from config.defaults import MODELS, MASK_PATH, V5_GRAM_WEIGHTS_PATH, V5_MIO_WEIGHTS_PATH, V8_MIO_WEIGHTS_PATH, VIDEO_FORMAT, RESULTS_PATH
 
 
 def get_video_list(folder_path: str) -> list:
@@ -101,8 +101,9 @@ if __name__ == "__main__":
         yolo = YOLO5(V5_GRAM_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
         yolo.silence_warning()
     elif model_name == MODELS[1]:
-        #TODO
-        print()
+        ds = MioDataset()
+        yolo = YOLO5(V5_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
+        yolo.silence_warning()
     elif model_name == MODELS[2]:
         ds = MioDataset()
         yolo = YOLO8(V8_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
