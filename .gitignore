@@ -7,4 +7,5 @@ detection/weights/yolo v*/*
 detection/.v5env/
 detection/.v8env/
 yolov*.pt
+experiments/**
 **/__pycache__/
