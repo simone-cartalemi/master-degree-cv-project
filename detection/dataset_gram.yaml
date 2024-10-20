@@ -1,5 +1,5 @@
-train: ./../../datasets/GRAM-RTMv4/Images/M-30-HD/images/train
-val: ./../../datasets/GRAM-RTMv4/Images/M-30-HD/images/val
+train: ./../datasets/GRAM-RTMv4/Images/M-30-HD/images/train
+val: ./../datasets/GRAM-RTMv4/Images/M-30-HD/images/val
 
 nc: 4
 names: ['car', 'motorcycle', 'truck', 'van']
