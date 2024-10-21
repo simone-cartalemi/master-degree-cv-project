@@ -14,7 +14,15 @@ from sort.sort import Sort
 
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
-from config.defaults import MODELS, MASK_PATH, V5_GRAM_WEIGHTS_PATH, V5_MIO_WEIGHTS_PATH, V8_MIO_WEIGHTS_PATH, VIDEO_FORMAT, RESULTS_PATH
+from config.defaults import (
+    MODELS,
+    MASK_PATH,
+    V5_GRAM_WEIGHTS_PATH,
+    V5_MIO_WEIGHTS_PATH,
+    V8_MIO_WEIGHTS_PATH,
+    VIDEO_FORMAT,
+    RESULTS_PATH
+)
 
 
 def get_video_list(folder_path: str) -> list:
