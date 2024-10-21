@@ -25,7 +25,7 @@ weights_yolo5 = './detection/weights/yolo v5/mio/exp/weights/best.pt'
 
 model = load_yolo_model(weights_yolo5)
 
-example_image = cv2.imread('./detection/src/test/example.png')
+example_image = cv2.imread('./detection/test/example.png')
 
 results = model(example_image)
 

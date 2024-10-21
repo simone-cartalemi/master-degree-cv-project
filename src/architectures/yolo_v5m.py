@@ -12,7 +12,7 @@ class YOLO5(YOLO):
     def __init__(self, weights_path: str, _classes: dict):
         self.check_path_os()
         #model = torch.hub.load("ultralytics/yolov5", "yolov5m")
-        model = torch.hub.load('detection/yolov5', 'custom', path=weights_path, source='local', verbose=False)
+        model = torch.hub.load('src/yolov5', 'custom', path=weights_path, source='local', verbose=False)
         model.eval()
         super().__init__(model, _classes)
 

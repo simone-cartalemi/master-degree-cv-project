@@ -11,5 +11,5 @@ mv ./datasets/MIO-TCD-Localization.tar ./datasets/MIO-TCD-Localization/
 mv ./datasets/MIO-TCD-Localization/train ./datasets/MIO-TCD-Localization/images
 
 # Esegui labeling e splitting
-python ./detection/src/convert_labels.py mio-tcd ./datasets/MIO-TCD-Localization/images/ ./datasets/MIO-TCD-Localization/gt_train.csv
-python ./detection/src/split.py ./datasets/MIO-TCD-Localization/ 0.8
+python ./src/convert_labels.py mio-tcd ./datasets/MIO-TCD-Localization/images/ ./datasets/MIO-TCD-Localization/gt_train.csv
+python ./src/split.py ./datasets/MIO-TCD-Localization/ 0.8
