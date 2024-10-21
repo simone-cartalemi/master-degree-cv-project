@@ -6,6 +6,8 @@ from tqdm import tqdm
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
 
+from utils.fs import save_labels
+
 
 def yolo_format(image_path, objs):
     img = cv2.imread(image_path)
@@ -20,13 +22,6 @@ def yolo_format(image_path, objs):
         height = (obj["bndbox"][3] - obj["bndbox"][1]) / img_height
         output_objects.append(f"{cls} {x_center} {y_center} {width} {height}")
     return output_objects
-
-def save_labels(output_file_path, labels):
-    with open(output_file_path, 'w') as file:
-        for item in labels:
-            file.write(f"{item}\n")
-
-
 
 
 if __name__ == "__main__":

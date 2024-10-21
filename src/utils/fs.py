@@ -1,6 +1,13 @@
 import json
 import csv
 
+
+def save_labels(output_file_path: str, labels: list):
+    with open(output_file_path, 'w') as file:
+        for item in labels:
+            file.write(f"{item}\n")
+
+
 def get_tracking(tracking_path: str) -> dict:
     with open(tracking_path) as f:
         return json.load(f)
