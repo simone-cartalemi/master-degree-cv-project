@@ -55,11 +55,12 @@ Per assicurarsi che tutto sia stato installato correttamente, e che la GPU sia u
 import torch
 print(torch.cuda.is_available())
 ```
-> Altro comando più immediato
+> Altri comandi più immediato
 > ```sh
+> python -c "import torch; print(torch.cuda.is_available())"
 > python -c "import torch; print(torch.rand(2,3).cuda())"
 > ```
-È possibile inserire questo script anche in un file .py, l'importante è che il risultato sia proprio `True`
+È possibile inserire questo script anche in un file .py, l'importante è che il risultato sia proprio `True` o un tensore.
 
 
 ### Possibili problemi

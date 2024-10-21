@@ -10,7 +10,7 @@ All'interno della cartella `src/` clonare il repository ufficiale:
 ```sh
 git clone https://github.com/ultralytics/yolov5
 ```
-Dopo aver preparato il virtual enviroment `.v5env` come descritto in questa ([guida](./CUDA%20on%20Windows.md)) all'interno della cartella `detection/`, installare le dipendenze mediante il comando
+Dopo aver preparato e attivato il virtual enviroment `.venv` come descritto in questa ([guida](./CUDA%20on%20Windows.md)) installare le dipendenze mediante il comando
 ```sh
 pip install -r src/yolov5/requirements.txt
 ```
@@ -25,8 +25,7 @@ python ./detection/test/check_yolov5.py
 
 ## Setup della versione 8
 
-Creare il virtual enviroment `.v8env` all'interno della cartella `detection/`.
-Dopo aver attivato l'enviroment, eseguire il comando
+Dopo aver preparato e attivato il virtual enviroment `.venv`, eseguire il comando
 ```sh
 pip install ultralytics==8.0.196
 ```
