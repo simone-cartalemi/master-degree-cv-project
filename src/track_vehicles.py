@@ -25,7 +25,7 @@ from config.defaults import (
 
 
 def get_video_list(folder_path: str) -> list:
-    return sorted([f for f in os.listdir(folder_path) if f.lower().endswith(VIDEO_FORMAT)])
+    return sorted([f for f in os.listdir(folder_path) if f.endswith(VIDEO_FORMAT)])
 
 def export_results(folder_path: str, name: str, data: list) -> None:
     os.makedirs(folder_path, exist_ok=True)

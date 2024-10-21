@@ -9,7 +9,7 @@ V8_MIO_WEIGHTS_PATH = "detection/weights/yolo v8/train/weights/best.pt"
 #BENCHMARK_PATH = "datasets/thai/"
 VIDEO_RESOLUTION = (1920, 1080)
 VIDEO_FRAME_PER_SECOND = 120
-VIDEO_FORMAT = ".mov"
+VIDEO_FORMAT = ".MOV"
 MASK_PATH = "datasets/thai/masks/ROI_last.png"   # ROI_all.png
 
 HOMOGRAPHY_MATRIX = np.load("homography/matrixes/thai_hom_matrix_last.npy")
