@@ -1,5 +1,4 @@
 import cv2
-import json
 
 import os
 import sys
@@ -7,11 +6,8 @@ import sys
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
 from config.defaults import RESULTS_PATH
+from utils.fs import get_tracking
 
-
-def get_tracking(tracking_path: str) -> dict:
-    with open(tracking_path) as f:
-        return json.load(f)
 
 def draw_bndbox_video(video_path: str, history: dict, output_path: str, classes: list):
     video_name = os.path.basename(video_path)
