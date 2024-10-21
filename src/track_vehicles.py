@@ -1,4 +1,3 @@
-import config.defaults as defaults
 from architectures.yolo_v5m import YOLO5
 from architectures.yolo_v8s import YOLO8
 
@@ -84,7 +83,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Missing arguments. Please use command:\ntrack_vehicles.py v5m_gram|v5m_mio|v8s_mio single_video|folder_path")
         exit(-1)
-    if str(sys.argv[1]) not in defaults.MODELS:
+    if str(sys.argv[1]) not in MODELS:
         print("Unknow model: use v5m_gram|v5m_mio|v8s_mio")
     model_name = str(sys.argv[1])
     arg_2 = str(sys.argv[2])
