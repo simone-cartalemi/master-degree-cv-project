@@ -22,10 +22,8 @@ from config.defaults import (
     VIDEO_FORMAT,
     RESULTS_PATH
 )
+from utils.fs import get_file_format_list
 
-
-def get_video_list(folder_path: str) -> list:
-    return sorted([f for f in os.listdir(folder_path) if f.endswith(VIDEO_FORMAT)])
 
 def export_results(folder_path: str, name: str, data: list) -> None:
     os.makedirs(folder_path, exist_ok=True)
@@ -89,7 +87,7 @@ if __name__ == "__main__":
     arg_2 = str(sys.argv[2])
     if os.path.isdir(arg_2):
         folder_path = arg_2
-        video_list = get_video_list(folder_path)
+        video_list = get_file_format_list(folder_path, VIDEO_FORMAT)
     else:
         folder_path = os.path.dirname(arg_2)
         video_file = os.path.basename(arg_2)

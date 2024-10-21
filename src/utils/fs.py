@@ -1,11 +1,17 @@
 import json
 import csv
 
+import os
+
 
 def save_labels(output_file_path: str, labels: list):
     with open(output_file_path, 'w') as file:
         for item in labels:
             file.write(f"{item}\n")
+
+
+def get_file_format_list(folder_path: str, format: str) -> list:
+    return sorted([f for f in os.listdir(folder_path) if f.endswith(format)])
 
 
 def get_tracking(tracking_path: str) -> dict:
