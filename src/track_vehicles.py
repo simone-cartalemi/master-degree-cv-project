@@ -22,15 +22,7 @@ from config.defaults import (
     VIDEO_FORMAT,
     RESULTS_PATH
 )
-
-
-def get_video_list(folder_path: str) -> list:
-    return sorted([f for f in os.listdir(folder_path) if f.endswith(VIDEO_FORMAT)])
-
-def export_results(folder_path: str, name: str, data: list) -> None:
-    os.makedirs(folder_path, exist_ok=True)
-    with open(os.path.join(folder_path, name + ".json"), 'w') as f:
-       f.write(json.dumps(data))
+from utils.fs import get_file_format_list, export_tracking_results
 
 
 def get_vehicles_position(yolo, tracker, frame):
@@ -89,7 +81,7 @@ if __name__ == "__main__":
     arg_2 = str(sys.argv[2])
     if os.path.isdir(arg_2):
         folder_path = arg_2
-        video_list = get_video_list(folder_path)
+        video_list = get_file_format_list(folder_path, VIDEO_FORMAT)
     else:
         folder_path = os.path.dirname(arg_2)
         video_file = os.path.basename(arg_2)
@@ -125,4 +117,4 @@ if __name__ == "__main__":
         video_path = os.path.join(folder_path, video_file)
         history = detect_video(video_path, yolo, mask=mask)
 
-        export_results(output_folder, os.path.splitext(video_file)[0], history)
+        export_tracking_results(output_folder, os.path.splitext(video_file)[0], history)
