@@ -29,7 +29,7 @@ class Benchmark():
         
         frame_target_candidates = [f for f in gt_video.keys() if f >= min_vehicle_f and f <= max_vehicle_f]
         for f_t in frame_target_candidates:
-            for f_i in range(f_t - frame_error_range, f_t + frame_error_range):
+            for f_i in range(max(min_vehicle_f, f_t - frame_error_range), max(f_t + frame_error_range, max_vehicle_f)):
                 if f_i in vehicle_history and vehicle_history[f_i][1] >= VALIDATION_WINDOW[0] and vehicle_history[f_i][1] <= VALIDATION_WINDOW[1]:
                     return gt_video.pop(f_t)
         return None
