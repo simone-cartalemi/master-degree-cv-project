@@ -6,7 +6,8 @@ V5_MIO_WEIGHTS_PATH = "detection/weights/yolo v5/mio/exp/weights/best.pt"
 V8_MIO_WEIGHTS_PATH = "detection/weights/yolo v8/train/weights/best.pt"
 
 
-#BENCHMARK_PATH = "datasets/thai/"
+BENCHMARK_PATH = "datasets/thai/"
+BENCHMARK_LABELS_FILE = "all_vehicles_120_fps.csv"
 VIDEO_RESOLUTION = (1920, 1080)
 VIDEO_FRAME_PER_SECOND = 120
 VIDEO_FORMAT = ".MOV"
