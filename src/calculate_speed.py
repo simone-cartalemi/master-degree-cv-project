@@ -2,7 +2,6 @@ from config.defaults import BENCHMARK_PATH, BENCHMARK_LABELS_FILE
 from validator.benchmark import Benchmark
 from estimator.speed import calculate_speed
 from utils.fs import get_tracking, get_file_format_list, export_speed_results
-from estimator.speed import calculate_speed
 
 import os
 import sys
