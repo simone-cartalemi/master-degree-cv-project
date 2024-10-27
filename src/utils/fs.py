@@ -13,6 +13,14 @@ def save_labels(output_file_path: str, labels: list):
 def get_file_format_list(folder_path: str, format: str) -> list:
     return sorted([f for f in os.listdir(folder_path) if f.endswith(format)])
 
+def get_csv_lines(csv_file_path: str) -> list:
+    rows = []
+    with open(csv_file_path, mode ='r') as f:
+        csvFile = csv.reader(f)
+        next(csvFile)
+        for row in csvFile:
+            rows.append(row)
+    return rows
 
 def export_tracking_results(folder_path: str, name: str, data: list) -> None:
     os.makedirs(folder_path, exist_ok=True)

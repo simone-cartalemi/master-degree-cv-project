@@ -1,4 +1,4 @@
-import csv
+from utils.fs import get_csv_lines
 
 from config.defaults import VALIDATION_WINDOW
 
@@ -7,15 +7,13 @@ class Benchmark():
     ground_truth = {}
 
     def __init__(self, file_path: str) -> None:
-        with open(file_path, mode ='r') as f:
-            csvFile = csv.reader(f)
-            next(csvFile)
-            for lines in csvFile:
-                video_name, frame_n, id_vehicle, laser_speed = lines
-                if video_name not in self.ground_truth:
-                    self.ground_truth[video_name] = {int(frame_n): int(laser_speed)}
-                else:
-                    self.ground_truth[video_name][int(frame_n)] = int(laser_speed)
+        csvFile = get_csv_lines(file_path)
+        for lines in csvFile:
+            video_name, frame_n, id_vehicle, laser_speed = lines
+            if video_name not in self.ground_truth:
+                self.ground_truth[video_name] = {int(frame_n): int(laser_speed)}
+            else:
+                self.ground_truth[video_name][int(frame_n)] = int(laser_speed)
 
     def get_apparition_frames(self, vehicle_history: dict) -> tuple:
         return ( min(vehicle_history.keys()), max(vehicle_history.keys()) )
