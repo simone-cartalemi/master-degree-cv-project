@@ -9,7 +9,7 @@ import sys
 
 def get_vehicles_dictionary(history: dict) -> dict:
     '''
-    For each vehicle in history frames, get vehicle class, all positions (centered in bounding box) and frame associated.
+    For each vehicle in history frames, get vehicle class, last bounding box, all positions (centered in bounding box) and frame associated.
     Remap centers to homography space
     '''
     all_vehicles = {}
@@ -25,6 +25,7 @@ def get_vehicles_dictionary(history: dict) -> dict:
                 all_vehicles[vehicle_id] = {'class': cls, 'centers': {}}
 
             all_vehicles[vehicle_id]['centers'][int(frame)] = obj_center
+            all_vehicles[vehicle_id]['bbox'] = vehicle['bbox']
     return all_vehicles
 
 def main(argv: list = []):
