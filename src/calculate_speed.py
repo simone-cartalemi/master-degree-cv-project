@@ -2,7 +2,7 @@ from config.defaults import BENCHMARK_PATH, BENCHMARK_LABELS_FILE
 from validator.benchmark import Benchmark
 from estimator.speed import calculate_speed
 from utils.fs import get_tracking, get_file_format_list, export_speed_results
-from estimator.speed import remap_point, calculate_speed
+from estimator.speed import calculate_speed
 
 import os
 import sys
@@ -19,7 +19,7 @@ def get_vehicles_dictionary(history: dict) -> dict:
             x1, y1, x2, y2 = vehicle['bbox']
             center_x = (x1 + x2) // 2
             center_y = (y1 + y2) // 2
-            obj_center = remap_point((center_x, center_y))
+            obj_center = (center_x, center_y)
 
             if vehicle_id not in all_vehicles:
                 all_vehicles[vehicle_id] = {int(frame): obj_center}

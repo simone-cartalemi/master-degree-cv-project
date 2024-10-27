@@ -49,6 +49,6 @@ def calculate_speed(positions: dict, instant_treshold: int = 60) -> float|None:
     if frames_difference < instant_treshold:
         return None
     
-    initial_point = filtered_positions[i_index]
-    final_point = filtered_positions[f_index]
+    initial_point = remap_point(filtered_positions[i_index])
+    final_point = remap_point(filtered_positions[f_index])
     return frame_to_kmph(initial_point, final_point, frames_difference)
