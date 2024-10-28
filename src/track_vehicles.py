@@ -2,12 +2,10 @@ from architectures.yolo_v5m import YOLO5
 from architectures.yolo_v8s import YOLO8
 
 import datetime
-import sys
 import os
+import argparse
 
 import cv2
-
-import json
 
 from sort.sort import Sort
 
@@ -43,9 +41,13 @@ def get_vehicles_position(yolo, tracker, frame):
 
     return objects
 
-def detect_video(video_path, yolo, mask, silent: bool = False) -> list:
-    if not silent:
+def detect_video(video_path, yolo, mask, verbose: bool) -> list:
+    
+    if verbose:
         print(f"Detecting {video_path}")
+
+    # Import tracker
+    tracker = Sort()
 
     cap = cv2.VideoCapture(video_path)
     total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -54,7 +56,7 @@ def detect_video(video_path, yolo, mask, silent: bool = False) -> list:
 
     frame_number = 1
     while cap.isOpened():
-        if not silent and frame_number % 120 == 0:
+        if verbose and frame_number % 120 == 0:
             print(f"{frame_number}/{total_frames}\t{frame_number // 120} s")
         ret, frame = cap.read()
         if not ret:
@@ -71,42 +73,32 @@ def detect_video(video_path, yolo, mask, silent: bool = False) -> list:
     return history
 
 
-if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Missing arguments. Please use command:\ntrack_vehicles.py v5m_gram|v5m_mio|v8s_mio single_video|folder_path")
-        exit(-1)
-    if str(sys.argv[1]) not in [m.value for m in Models]:
-        print("Unknow model: use v5m_gram|v5m_mio|v8s_mio")
-    model_name = str(sys.argv[1])
-    arg_2 = str(sys.argv[2])
-    if os.path.isdir(arg_2):
-        folder_path = arg_2
+def main(resource_path: str, model: str, verbose: bool = False):
+    if os.path.isdir(resource_path):
+        folder_path = resource_path
         video_list = get_file_format_list(folder_path, VIDEO_FORMAT)
     else:
-        folder_path = os.path.dirname(arg_2)
-        video_file = os.path.basename(arg_2)
+        folder_path = os.path.dirname(resource_path)
+        video_file = os.path.basename(resource_path)
         video_list = [video_file]
-        
+
     # Timestamp
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    output_folder = os.path.join(RESULTS_PATH, "tracks", model_name + "_" + timestamp)
+    output_folder = os.path.join(RESULTS_PATH, "tracks", str(model) + "_" + timestamp)
     print(f"Results in dir: {output_folder}")
 
     # Detect with selected model
-    if model_name == Models.V5_GRAM:
+    if model == Models.V5_GRAM:
         ds = GramDataset()
         yolo = YOLO5(V5_GRAM_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
         yolo.silence_warning()
-    elif model_name == Models.V5_MIO:
+    elif model == Models.V5_MIO:
         ds = MioDataset()
         yolo = YOLO5(V5_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
         yolo.silence_warning()
-    elif model_name == Models.V8_MIO:
+    elif model == Models.V8_MIO:
         ds = MioDataset()
         yolo = YOLO8(V8_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
-
-    # Import tracker
-    tracker = Sort()
 
     # Import mask
     roi_mask = cv2.imread(MASK_PATH, cv2.IMREAD_GRAYSCALE)
@@ -115,6 +107,16 @@ if __name__ == "__main__":
     # For each video detect and save results
     for video_file in video_list:
         video_path = os.path.join(folder_path, video_file)
-        history = detect_video(video_path, yolo, mask=mask)
+        history = detect_video(video_path, yolo, mask, verbose)
 
         export_tracking_results(output_folder, os.path.splitext(video_file)[0], history)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("model", type=Models, choices=list(Models), help="Model name for detecting")
+    parser.add_argument("resource_path", type=str, help="Path of input video or videos' folder")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Print output")
+
+    args = parser.parse_args()
+    main(args.resource_path, args.model, args.verbose)
