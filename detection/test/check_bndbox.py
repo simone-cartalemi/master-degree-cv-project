@@ -2,15 +2,11 @@ import cv2
 import matplotlib.pyplot as plt
 
 import os
-import sys
+from argparse import ArgumentParser
 
 
-
-if __name__ == "__main__":
-    img_folder_path = str(sys.argv[1])
-    index_img = int(sys.argv[2])
+def main(img_folder_path: str, index_img: int = 0):
     label_path = os.path.join(img_folder_path, "../labels/")
-
 
     imgs = [f for f in os.listdir(img_folder_path) if os.path.isfile(os.path.join(img_folder_path, f))]
     imgs.sort()
@@ -41,3 +37,13 @@ if __name__ == "__main__":
     plt.imshow(img)
     plt.axis('off')
     plt.show()
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("img_folder_path", type=str, help="Path of input frame")
+    parser.add_argument("index_img", type=int, default=0, help="Index for frame")
+
+    args = parser.parse_args()
+
+    main(args.img_folder_path, args.index_img)
