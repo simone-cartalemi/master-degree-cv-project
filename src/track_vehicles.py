@@ -14,7 +14,7 @@ from sort.sort import Sort
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
 from config.defaults import (
-    MODELS,
+    Models,
     MASK_PATH,
     V5_GRAM_WEIGHTS_PATH,
     V5_MIO_WEIGHTS_PATH,
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 3:
         print("Missing arguments. Please use command:\ntrack_vehicles.py v5m_gram|v5m_mio|v8s_mio single_video|folder_path")
         exit(-1)
-    if str(sys.argv[1]) not in MODELS:
+    if str(sys.argv[1]) not in [m.value for m in Models]:
         print("Unknow model: use v5m_gram|v5m_mio|v8s_mio")
     model_name = str(sys.argv[1])
     arg_2 = str(sys.argv[2])
@@ -93,15 +93,15 @@ if __name__ == "__main__":
     print(f"Results in dir: {output_folder}")
 
     # Detect with selected model
-    if model_name == MODELS[0]:
+    if model_name == Models.V5_GRAM:
         ds = GramDataset()
         yolo = YOLO5(V5_GRAM_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
         yolo.silence_warning()
-    elif model_name == MODELS[1]:
+    elif model_name == Models.V5_MIO:
         ds = MioDataset()
         yolo = YOLO5(V5_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
         yolo.silence_warning()
-    elif model_name == MODELS[2]:
+    elif model_name == Models.V8_MIO:
         ds = MioDataset()
         yolo = YOLO8(V8_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
 
