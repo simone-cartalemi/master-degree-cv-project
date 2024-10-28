@@ -10,7 +10,6 @@ import sys
 def get_vehicles_dictionary(history: dict) -> dict:
     '''
     For each vehicle in history frames, get vehicle class, last bounding box, all positions (centered in bounding box) and frame associated.
-    Remap centers to homography space
     '''
     all_vehicles = {}
     for frame, objects in history.items():
