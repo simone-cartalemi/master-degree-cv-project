@@ -4,7 +4,7 @@ from estimator.speed import calculate_speed
 from utils.fs import get_tracking, get_file_format_list, export_speed_results
 
 import os
-import sys
+import argparse
 
 
 def get_vehicles_dictionary(history: dict) -> dict:
@@ -27,10 +27,8 @@ def get_vehicles_dictionary(history: dict) -> dict:
             all_vehicles[vehicle_id]['bbox'] = vehicle['bbox']
     return all_vehicles
 
-def main(argv: list = []):
-    input_folder = str(argv[1])
-    output_folder = str(argv[2])
 
+def main(input_folder: str, output_folder: str):
     results_list = get_file_format_list(input_folder, ".json")
     print(f"There are {len(results_list)} tracked videos")
 
@@ -61,7 +59,10 @@ def main(argv: list = []):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Missing arguments. Please use command:\ncalculate_speed.py input_folder_path outputh_folder_path")
-        exit(-1)
-    main(sys.argv)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_folder_path", type=str, help="Path of videos' track json file")
+    parser.add_argument("output_folder_path", type=str, help="Path of output folder")
+
+    args = parser.parse_args()
+
+    main(args.input_folder_path, args.output_folder_path)
