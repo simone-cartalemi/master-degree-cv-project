@@ -12,7 +12,7 @@ from sort.sort import Sort
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
 from config.defaults import (
-    Models,
+    Model,
     MASK_PATH,
     V5_GRAM_WEIGHTS_PATH,
     V5_MIO_WEIGHTS_PATH,
@@ -88,15 +88,15 @@ def main(resource_path: str, model: str, verbose: bool = False):
     print(f"Results in dir: {output_folder}")
 
     # Detect with selected model
-    if model == Models.V5_GRAM:
+    if model == Model.V5_GRAM:
         ds = GramDataset()
         yolo = YOLO5(V5_GRAM_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
         yolo.silence_warning()
-    elif model == Models.V5_MIO:
+    elif model == Model.V5_MIO:
         ds = MioDataset()
         yolo = YOLO5(V5_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
         yolo.silence_warning()
-    elif model == Models.V8_MIO:
+    elif model == Model.V8_MIO:
         ds = MioDataset()
         yolo = YOLO8(V8_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
 
@@ -114,7 +114,7 @@ def main(resource_path: str, model: str, verbose: bool = False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("model", type=Models, choices=list(Models), help="Model name for detecting")
+    parser.add_argument("model", type=Model, choices=list(Model), help="Model name for detecting")
     parser.add_argument("resource_path", type=str, help="Path of input video or videos' folder")
     parser.add_argument("-v", "--verbose", action="store_true", help="Print output")
 

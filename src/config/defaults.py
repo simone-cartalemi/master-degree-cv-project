@@ -1,7 +1,7 @@
 import numpy as np
 from enum import Enum
 
-class Models(Enum):
+class Model(Enum):
     V5_GRAM = "v5m_gram"
     V5_MIO = "v5m_mio"
     V8_MIO = "v8s_mio"
