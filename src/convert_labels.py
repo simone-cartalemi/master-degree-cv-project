@@ -1,6 +1,6 @@
 import cv2
 import os
-import sys
+from argparse import ArgumentParser
 from tqdm import tqdm
 
 from dataset.gram_rtm import GramDataset
@@ -24,10 +24,7 @@ def yolo_format(image_path, objs):
     return output_objects
 
 
-if __name__ == "__main__":
-    dataset_name = str(sys.argv[1])
-    images_folder_path = str(sys.argv[2])
-    labels_path = str(sys.argv[3])
+def main(dataset_name: str, images_folder_path: str, labels_path: str):
     labels_out_path = os.path.join(images_folder_path, "../labels/")
     os.makedirs(labels_out_path, exist_ok=True)
 
@@ -49,3 +46,13 @@ if __name__ == "__main__":
         new_labels_path = os.path.join(labels_out_path, img_name + '.txt')
         new_labels = yolo_format(img_path, objs)
         save_labels(new_labels_path, new_labels)
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("dataset_name", type=str, help="Dataset: gram|mio")
+    parser.add_argument("images_folder_path", type=str, help="All dataset images folder")
+    parser.add_argument("labels_path", type=str, help="All dataset label folder")
+
+    args = parser.parse_args()
+    main(args.dataset_name, args.images_folder_path, args.labels_path)

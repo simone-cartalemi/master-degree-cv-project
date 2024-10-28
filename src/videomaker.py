@@ -1,7 +1,7 @@
 import cv2
 
 import os
-import sys
+from argparse import ArgumentParser
 
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
@@ -22,7 +22,7 @@ def draw_bndbox_video(video_path: str, history: dict, output_path: str, classes:
 
     # Writer video
     output_video_path = os.path.join(output_path, "bnd-box_" + video_name)
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')    # cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output_video_path, fourcc, frame_rate, (width, height))
 
     frame_number = 1
@@ -53,18 +53,9 @@ def draw_bndbox_video(video_path: str, history: dict, output_path: str, classes:
     print(f"File saved in {output_video_path}")
 
 
-if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Missing arguments. Please use command:\nvideomaker.py video_path video_tracks_path [gram]")
-    video_tracks_path = sys.argv[2]
-    if os.path.isdir(video_tracks_path) or os.path.splitext(video_tracks_path)[1].lower() != '.json':
-        print("Please insert valid json file")
-    if os.path.isdir(sys.argv[1]):
-        print("First argument must be a video file, not a folder")
-    video_file = sys.argv[1]
-    
+def main(video_tracks_path: str, video_file: str, dataset: str = "mio", draw_tracks: bool = False):
     # Get class label
-    if len(sys.argv) > 3 and sys.argv[3] == "gram":
+    if dataset == "gram":
         ds = GramDataset()
     else:
         ds = MioDataset()
@@ -76,3 +67,20 @@ if __name__ == "__main__":
     output_folder = os.path.join(RESULTS_PATH, "tracks/videos/")
     os.makedirs(output_folder, exist_ok=True)
     draw_bndbox_video(video_file, history, output_folder, classes)
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("video_path", type=str, help="Path of input video")
+    parser.add_argument("video_tracks_path", type=str, help="Path of video's tracks json file")
+    parser.add_argument("-d", "--dataset", type=str, default="mio", help="Dataset mode")
+    parser.add_argument("-t", "--tracks", action="store_true", help="Show vehicles track")
+
+    args = parser.parse_args()
+
+    if os.path.isdir(args.video_tracks_path) or not args.video_tracks_path.lower().endswith('.json'):
+        print("Please insert valid json file")
+    if os.path.isdir(args.video_path):
+        print("First argument must be a video file, not a folder")
+
+    main(args.video_tracks_path, args.video_path, args.dataset, args.tracks)

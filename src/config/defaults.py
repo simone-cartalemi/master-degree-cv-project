@@ -1,6 +1,14 @@
 import numpy as np
+from enum import Enum
 
-MODELS = ["v5m_gram", "v5m_mio", "v8s_mio"]
+class Model(Enum):
+    V5_GRAM = "v5m_gram"
+    V5_MIO = "v5m_mio"
+    V8_MIO = "v8s_mio"
+
+    def __str__(self):
+        return self.value
+
 V5_GRAM_WEIGHTS_PATH = "detection/weights/yolo v5/gram/exp/weights/best.pt"
 V5_MIO_WEIGHTS_PATH = "detection/weights/yolo v5/mio/exp/weights/best.pt"
 V8_MIO_WEIGHTS_PATH = "detection/weights/yolo v8/train/weights/best.pt"

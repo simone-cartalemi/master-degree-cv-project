@@ -1,9 +1,10 @@
 import os
-import sys
+from argparse import ArgumentParser
 import shutil
 import random
 from pathlib import Path
 from tqdm import tqdm
+
 
 def split_dataset(dataset_path, train_ratio=0.8):
     # Percorsi alle sottocartelle
@@ -53,9 +54,15 @@ def split_dataset(dataset_path, train_ratio=0.8):
         shutil.move(os.path.join(images_dir, img_file), os.path.join(val_images_dir, img_file))
         shutil.move(os.path.join(labels_dir, lbl_file), os.path.join(val_labels_dir, lbl_file))
 
-if __name__ == "__main__":
-    full_data_path = str(sys.argv[1])
-    ratio = 0.8
-    if len(sys.argv) > 2:
-        ratio = float(sys.argv[2])
+
+def main(full_data_path: str, ratio: float = 0.8):
     split_dataset(full_data_path, train_ratio=ratio)
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("full_data_path", type=str, help="Dataset: gram|mio")
+    parser.add_argument("ratio", type=float, default=0.8, help="All dataset images folder")
+
+    args = parser.parse_args()
+    main(args.full_data_path, args.ratio)
