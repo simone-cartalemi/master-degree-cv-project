@@ -4,7 +4,7 @@ from estimator.speed import calculate_speed
 from utils.fs import get_tracking, get_file_format_list, export_speed_results
 
 import os
-import argparse
+from argparse import ArgumentParser
 
 
 def get_vehicles_dictionary(history: dict) -> dict:
@@ -59,7 +59,7 @@ def main(input_folder: str, output_folder: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = ArgumentParser()
     parser.add_argument("input_folder_path", type=str, help="Path of videos' track json file")
     parser.add_argument("output_folder_path", type=str, help="Path of output folder")
 

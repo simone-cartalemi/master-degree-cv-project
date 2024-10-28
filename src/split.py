@@ -1,5 +1,5 @@
 import os
-import argparse
+from argparse import ArgumentParser
 import shutil
 import random
 from pathlib import Path
@@ -60,7 +60,7 @@ def main(full_data_path: str, ratio: float = 0.8):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = ArgumentParser()
     parser.add_argument("full_data_path", type=str, help="Dataset: gram|mio")
     parser.add_argument("ratio", type=float, default=0.8, help="All dataset images folder")
 

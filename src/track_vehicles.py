@@ -3,7 +3,7 @@ from architectures.yolo_v8s import YOLO8
 
 import datetime
 import os
-import argparse
+from argparse import ArgumentParser
 
 import cv2
 
@@ -113,7 +113,7 @@ def main(resource_path: str, model: str, verbose: bool = False):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = ArgumentParser()
     parser.add_argument("model", type=Model, choices=list(Model), help="Model name for detecting")
     parser.add_argument("resource_path", type=str, help="Path of input video or videos' folder")
     parser.add_argument("-v", "--verbose", action="store_true", help="Print output")

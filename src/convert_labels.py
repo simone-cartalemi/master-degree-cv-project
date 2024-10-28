@@ -1,6 +1,6 @@
 import cv2
 import os
-import argparse
+from argparse import ArgumentParser
 from tqdm import tqdm
 
 from dataset.gram_rtm import GramDataset
@@ -49,7 +49,7 @@ def main(dataset_name: str, images_folder_path: str, labels_path: str):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = ArgumentParser()
     parser.add_argument("dataset_name", type=str, help="Dataset: gram|mio")
     parser.add_argument("images_folder_path", type=str, help="All dataset images folder")
     parser.add_argument("labels_path", type=str, help="All dataset label folder")

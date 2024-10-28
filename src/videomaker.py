@@ -1,7 +1,7 @@
 import cv2
 
 import os
-import argparse
+from argparse import ArgumentParser
 
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
@@ -70,7 +70,7 @@ def main(video_tracks_path: str, video_file: str, dataset: str = "mio", draw_tra
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+    parser = ArgumentParser()
     parser.add_argument("video_path", type=str, help="Path of input video")
     parser.add_argument("video_tracks_path", type=str, help="Path of video's tracks json file")
     parser.add_argument("-d", "--dataset", type=str, default="mio", help="Dataset mode")
