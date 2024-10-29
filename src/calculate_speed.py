@@ -7,6 +7,15 @@ import os
 from argparse import ArgumentParser
 
 
+def centroid(bbox: list) -> tuple:
+    '''
+    Calculate center point of bounding box
+    '''
+    x1, y1, x2, y2 = bbox
+    center_x = (x1 + x2) // 2
+    center_y = (y1 + y2) // 2
+    return (center_x, center_y)
+
 def get_vehicles_dictionary(history: dict) -> dict:
     '''
     For each vehicle in history frames, get vehicle class, last bounding box, all positions (centered in bounding box) and frame associated.
@@ -14,10 +23,7 @@ def get_vehicles_dictionary(history: dict) -> dict:
     all_vehicles = {}
     for frame, objects in history.items():
         for vehicle_id, vehicle in objects.items():
-            x1, y1, x2, y2 = vehicle['bbox']
-            center_x = (x1 + x2) // 2
-            center_y = (y1 + y2) // 2
-            obj_center = (center_x, center_y)
+            obj_center = centroid(vehicle['bbox'])
             cls = int(vehicle['class'])
 
             if vehicle_id not in all_vehicles:
