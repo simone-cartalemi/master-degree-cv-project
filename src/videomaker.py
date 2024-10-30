@@ -64,102 +64,78 @@ def drag_tracks(tracks: dict) -> dict:
     return result_dict
 
 
-def draw_tracks_video(video_path: str, history: dict, output_path: str, classes: list):
+def draw_in_video(
+        video_path: str,
+        history: dict,
+        output_path: str,
+        classes: list,
+        draw_labels: bool,
+        draw_bndbox: bool,
+        draw_tracks: bool
+):
     video_name = os.path.basename(video_path)
-    print(f"Making tracks on {video_name}")
+    print(f"Processing and exporting: {video_name}")
 
-    # Inizializza il lettore del video di input
-    cap = cv2.VideoCapture(video_path)
-    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    frame_rate = cap.get(cv2.CAP_PROP_FPS)
-    width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-    # Inizializza il writer del video di output
-    output_video_path = os.path.join(output_path, "tracks_" + video_name)
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-    out = cv2.VideoWriter(output_video_path, fourcc, frame_rate, (width, height))
-
+    # Process vehicles data
     all_vehicles = get_vehicles_dictionary(history)
     history = drag_tracks(history)
 
+    # Initialize reader input video
+    video_reader = cv2.VideoCapture(video_path)
+    total_frames = int(video_reader.get(cv2.CAP_PROP_FRAME_COUNT))
+    frame_rate = video_reader.get(cv2.CAP_PROP_FPS)
+    width  = int(video_reader.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video_reader.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    # Initialize writer output video
+    output_video_path = os.path.join(output_path, "exporting_" + video_name)
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    video_writer = cv2.VideoWriter(output_video_path, fourcc, frame_rate, (width, height))
+
     frame_number = 1
-    while cap.isOpened() and frame_number <= total_frames:
+    while video_reader.isOpened() and frame_number <= total_frames:
         if frame_number % 120 == 0:
             print(f"{frame_number}/{total_frames}\t{frame_number // 120} s")
 
-        ret, frame = cap.read()
+        ret, frame = video_reader.read()
         if not ret:
             break
 
         for object_id, object_data in history[frame_number].items():
-            c = TRACK_COLORS[int(float(object_id)) % len(TRACK_COLORS)]
-            speed = calculate_speed(all_vehicles[object_id]['centers'])
-            cls = classes[int(object_data["class"])]
-            for bbox in object_data['bbox'].values():
-                px, py = centroid(bbox)
-                cv2.circle(frame, (int(px), int(py)), radius=3, color=c, thickness=-1)
-            out_speed_text = f"Speed: {speed} km/h " if speed else ""
-            if frame_number in object_data["bbox"]:
-                x1, y1, x2, y2 = object_data["bbox"][frame_number]
-            cv2.putText(frame, f"{out_speed_text}ID: {object_id}, Cls: {cls}", (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            if draw_tracks:
+                c = TRACK_COLORS[int(float(object_id)) % len(TRACK_COLORS)]
+                for bbox in object_data['bbox'].values():
+                    px, py = centroid(bbox)
+                    cv2.circle(frame, (int(px), int(py)), radius=3, color=c, thickness=-1)
+            if draw_bndbox:
+                if frame_number in object_data["bbox"]:
+                    x1, y1, x2, y2 = object_data["bbox"][frame_number]
+                cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
+            if draw_labels:
+                cls = classes[int(object_data["class"])]
+                speed = calculate_speed(all_vehicles[object_id]['centers'])
+                out_speed_text = f"Speed: {speed} km/h " if speed else ""
+                cv2.putText(frame, f"{out_speed_text}ID: {object_id}, Cls: {cls}", (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-        # Scrivi il frame nel video
-        out.write(frame)
+        # Write frame in video
+        video_writer.write(frame)
         frame_number += 1
 
-    # Rilascia il writer del video
-    out.release()
-    # Rilascia il lettore del video di input
-    cap.release()
+    # Release writer and reader
+    video_writer.release()
+    video_reader.release()
 
     print(f"File saved in {output_video_path}")
 
-def draw_bndbox_video(video_path: str, history: dict, output_path: str, classes: list):
-    video_name = os.path.basename(video_path)
-    print(f"Making bounding box on {video_name}")
 
-    # Video data
-    cap = cv2.VideoCapture(video_path)
-    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    frame_rate = int(cap.get(cv2.CAP_PROP_FPS))
-    width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
-    # Writer video
-    output_video_path = os.path.join(output_path, "bnd-box_" + video_name)
-    fourcc = cv2.VideoWriter_fourcc(*'XVID')    # cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter(output_video_path, fourcc, frame_rate, (width, height))
-
-    frame_number = 1
-    while cap.isOpened():
-        if frame_number % 120 == 0:
-            print(f"{frame_number}/{total_frames}\t{frame_number // 120} s")
-        ret, frame = cap.read()
-        if not ret:
-            break
-
-        # Draw bounding box, ID and classe on frame
-        for obj in history[str(frame_number)].values():
-            x1, y1, x2, y2 = obj["bbox"]
-            obj_id = obj["id"]
-            cls = classes[int(obj["class"])]
-            cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
-            cv2.putText(frame, f"ID: {int(obj_id)}, Cls: {cls}", (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        
-        # Add the frame on video
-        out.write(frame)
-
-        frame_number += 1
-
-    cap.release()
-
-    # Leave writer
-    out.release()
-    print(f"File saved in {output_video_path}")
-
-
-def main(video_file: str, video_tracks_path: str, dataset: str = "mio", draw_tracks: bool = False):
+def main(
+        video_file: str,
+        video_tracks_path: str,
+        dataset: str = "mio",
+        draw_labels: bool = True,
+        draw_bndbox: bool = False,
+        draw_tracks: bool = False
+):
     # Get class label
     if dataset == "gram":
         ds = GramDataset()
@@ -173,13 +149,11 @@ def main(video_file: str, video_tracks_path: str, dataset: str = "mio", draw_tra
     output_folder = os.path.join(RESULTS_PATH, "videos/")
     os.makedirs(output_folder, exist_ok=True)
 
-    if draw_tracks:
-        draw_tracks_video(video_file, history, output_folder, classes)
-    else:
-        draw_bndbox_video(video_file, history, output_folder, classes)
+    draw_in_video(video_file, history, output_folder, classes, draw_labels, draw_bndbox, draw_tracks)
 
 
-# TODO: formato video come parametro
+# TODO: formato video come parametro     # cv2.VideoWriter_fourcc(*'mp4v')
+# TODO: verbose parametro
 
 if __name__ == "__main__":
     parser = ArgumentParser()
@@ -187,6 +161,8 @@ if __name__ == "__main__":
     parser.add_argument("video_tracks_path", type=str, help="Path of video's tracks json file")
     parser.add_argument("-d", "--dataset", type=str, default="mio", help="Dataset mode")
     parser.add_argument("-t", "--tracks", action="store_true", help="Show vehicles track")
+    parser.add_argument("-b", "--bnd-box", action="store_true", help="Show vehicles bounding box")
+    parser.add_argument("-nl", "--no-labels", action="store_false", help="Hide vehicles details")
 
     args = parser.parse_args()
 
@@ -194,5 +170,7 @@ if __name__ == "__main__":
         print("First argument must be a video file, not a folder")
     if os.path.isdir(args.video_tracks_path) or not args.video_tracks_path.lower().endswith('.json'):
         print("Please insert valid json file")
+    if not args.labels and args.bndbox and args.tracks:
+        print("Output video settings are nonsense")
 
-    main(args.video_path, args.video_tracks_path, args.dataset, args.tracks)
+    main(args.video_path, args.video_tracks_path, args.dataset, args.labels, args.bndbox, args.tracks)
