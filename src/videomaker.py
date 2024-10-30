@@ -129,13 +129,23 @@ def draw_in_video(
 
 
 def main(
-        video_file: str,
+        video_path: str,
         video_tracks_path: str,
         dataset: str = "mio",
         draw_labels: bool = True,
         draw_bndbox: bool = False,
         draw_tracks: bool = False
 ):
+    if os.path.isdir(video_path):
+        print("First argument must be a video file, not a folder")
+        return
+    if os.path.isdir(video_tracks_path) or not video_tracks_path.lower().endswith('.json'):
+        print("Please insert valid json file")
+        return
+    if not draw_labels and draw_bndbox and draw_tracks:
+        print("Output video settings are nonsense")
+        return
+
     # Get class label
     if dataset == "gram":
         ds = GramDataset()
@@ -149,7 +159,7 @@ def main(
     output_folder = os.path.join(RESULTS_PATH, "videos/")
     os.makedirs(output_folder, exist_ok=True)
 
-    draw_in_video(video_file, history, output_folder, classes, draw_labels, draw_bndbox, draw_tracks)
+    draw_in_video(video_path, history, output_folder, classes, draw_labels, draw_bndbox, draw_tracks)
 
 
 # TODO: verbose parametro
@@ -164,12 +174,5 @@ if __name__ == "__main__":
     parser.add_argument("-nl", "--no-labels", action="store_false", help="Hide vehicles details")
 
     args = parser.parse_args()
-
-    if os.path.isdir(args.video_path):
-        print("First argument must be a video file, not a folder")
-    if os.path.isdir(args.video_tracks_path) or not args.video_tracks_path.lower().endswith('.json'):
-        print("Please insert valid json file")
-    if not args.labels and args.bndbox and args.tracks:
-        print("Output video settings are nonsense")
 
     main(args.video_path, args.video_tracks_path, args.dataset, args.labels, args.bndbox, args.tracks)
