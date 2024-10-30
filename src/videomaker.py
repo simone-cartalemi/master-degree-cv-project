@@ -102,14 +102,14 @@ def draw_in_video(
             break
 
         for object_id, object_data in history[frame_number].items():
+            if frame_number in object_data["bbox"]:
+                x1, y1, x2, y2 = object_data["bbox"][frame_number]
             if draw_tracks:
                 c = TRACK_COLORS[int(float(object_id)) % len(TRACK_COLORS)]
                 for bbox in object_data['bbox'].values():
                     px, py = centroid(bbox)
                     cv2.circle(frame, (int(px), int(py)), radius=3, color=c, thickness=-1)
             if draw_bndbox:
-                if frame_number in object_data["bbox"]:
-                    x1, y1, x2, y2 = object_data["bbox"][frame_number]
                 cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
             if draw_labels:
                 cls = classes[int(object_data["class"])]
