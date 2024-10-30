@@ -152,7 +152,6 @@ def main(
     draw_in_video(video_file, history, output_folder, classes, draw_labels, draw_bndbox, draw_tracks)
 
 
-# TODO: formato video come parametro     # cv2.VideoWriter_fourcc(*'mp4v')
 # TODO: verbose parametro
 
 if __name__ == "__main__":
