@@ -5,8 +5,10 @@ from argparse import ArgumentParser
 
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
-from config.defaults import RESULTS_PATH
+from config.defaults import RESULTS_PATH, TRACK_COLORS
 from utils.fs import get_tracking
+from estimator.speed import calculate_speed
+from calculate_speed import get_vehicles_dictionary, centroid
 
 
 def _get_last_seen_on_video(tracks: dict) -> dict:
@@ -62,9 +64,60 @@ def drag_tracks(tracks: dict) -> dict:
     return result_dict
 
 
-def draw_bndbox_video(video_path: str, history: dict, output_path: str, classes: list):
+def draw_tracks_video(video_path: str, history: dict, output_path: str, classes: list):
     video_name = os.path.basename(video_path)
     print(f"Making tracks on {video_name}")
+
+    # Inizializza il lettore del video di input
+    cap = cv2.VideoCapture(video_path)
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    frame_rate = cap.get(cv2.CAP_PROP_FPS)
+    width  = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+    # Inizializza il writer del video di output
+    output_video_path = os.path.join(output_path, "tracks_" + video_name)
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    out = cv2.VideoWriter(output_video_path, fourcc, frame_rate, (width, height))
+
+    all_vehicles = get_vehicles_dictionary(history)
+    history = drag_tracks(history)
+
+    frame_number = 1
+    while cap.isOpened() and frame_number <= total_frames:
+        if frame_number % 120 == 0:
+            print(f"{frame_number}/{total_frames}\t{frame_number // 120} s")
+
+        ret, frame = cap.read()
+        if not ret:
+            break
+
+        for object_id, object_data in history[frame_number].items():
+            c = TRACK_COLORS[int(float(object_id)) % len(TRACK_COLORS)]
+            speed = calculate_speed(all_vehicles[object_id]['centers'])
+            cls = classes[int(object_data["class"])]
+            for bbox in object_data['bbox'].values():
+                px, py = centroid(bbox)
+                cv2.circle(frame, (int(px), int(py)), radius=3, color=c, thickness=-1)
+            out_speed_text = f"Speed: {speed} km/h " if speed else ""
+            if frame_number in object_data["bbox"]:
+                x1, y1, x2, y2 = object_data["bbox"][frame_number]
+            cv2.putText(frame, f"{out_speed_text}ID: {object_id}, Cls: {cls}", (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+
+        # Scrivi il frame nel video
+        out.write(frame)
+        frame_number += 1
+
+    # Rilascia il writer del video
+    out.release()
+    # Rilascia il lettore del video di input
+    cap.release()
+
+    print(f"File saved in {output_video_path}")
+
+def draw_bndbox_video(video_path: str, history: dict, output_path: str, classes: list):
+    video_name = os.path.basename(video_path)
+    print(f"Making bounding box on {video_name}")
 
     # Video data
     cap = cv2.VideoCapture(video_path)
@@ -117,10 +170,16 @@ def main(video_file: str, video_tracks_path: str, dataset: str = "mio", draw_tra
     # Get tracking data
     history = get_tracking(video_tracks_path)
 
-    output_folder = os.path.join(RESULTS_PATH, "tracks/videos/")
+    output_folder = os.path.join(RESULTS_PATH, "videos/")
     os.makedirs(output_folder, exist_ok=True)
-    draw_bndbox_video(video_file, history, output_folder, classes)
 
+    if draw_tracks:
+        draw_tracks_video(video_file, history, output_folder, classes)
+    else:
+        draw_bndbox_video(video_file, history, output_folder, classes)
+
+
+# TODO: formato video come parametro
 
 if __name__ == "__main__":
     parser = ArgumentParser()
