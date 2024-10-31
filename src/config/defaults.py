@@ -1,5 +1,7 @@
-import numpy as np
 from enum import Enum
+
+import numpy as np
+
 
 class Model(Enum):
     V5_GRAM = "v5m_gram"

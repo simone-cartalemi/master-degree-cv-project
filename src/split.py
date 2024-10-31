@@ -1,8 +1,9 @@
 import os
-from argparse import ArgumentParser
-import shutil
 import random
+import shutil
+from argparse import ArgumentParser
 from pathlib import Path
+
 from tqdm import tqdm
 
 

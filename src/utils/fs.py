@@ -1,7 +1,6 @@
-import json
 import csv
-
 import os
+import json
 
 
 def save_labels(output_file_path: str, labels: list):

@@ -1,5 +1,5 @@
-import numpy as np
 import cv2
+import numpy as np
 
 from config.defaults import HOMOGRAPHY_MATRIX, CM_PER_PIXEL_RATIO, SPEED_WINDOW, VIDEO_FRAME_PER_SECOND
 

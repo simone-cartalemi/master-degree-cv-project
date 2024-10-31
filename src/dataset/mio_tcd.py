@@ -1,6 +1,6 @@
-from dataset.dataset import Dataset
-
 import csv
+
+from dataset.dataset import Dataset
 
 
 class MioDataset(Dataset):

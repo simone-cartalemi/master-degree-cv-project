@@ -1,8 +1,8 @@
-from architectures.yolo import YOLO
 import numpy as np
 
 from ultralytics import YOLO as ym
 
+from architectures.yolo import YOLO
 
 class YOLO8(YOLO):
 

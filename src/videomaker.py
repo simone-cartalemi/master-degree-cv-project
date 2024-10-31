@@ -1,14 +1,14 @@
-import cv2
-
 import os
 from argparse import ArgumentParser
 
+import cv2
+
+from config.defaults import RESULTS_PATH, TRACK_COLORS
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
-from config.defaults import RESULTS_PATH, TRACK_COLORS
+from estimator.vehicles_manager import drag_tracks, get_vehicles_dictionary
+from estimator.speed import centroid, linear_speed
 from utils.fs import get_tracking
-from estimator.speed import linear_speed, centroid
-from estimator.vehicles_manager import get_vehicles_dictionary, drag_tracks
 
 
 def draw_in_video(
