@@ -28,7 +28,7 @@ def frame_to_kmph(initial_point: tuple, final_point: tuple, frames_difference: i
     speed = (3.6 * distance_meters) / secs
     return round(speed, 2)
 
-def calculate_speed(positions: dict, instant_treshold: int = 60) -> float|None:
+def linear_speed(positions: dict, instant_treshold: int = 60) -> float|None:
     '''
     Calculate the vehicle speed between initial and final position (linear mean)
     Appearances shorter than instant_treshold will be discarded

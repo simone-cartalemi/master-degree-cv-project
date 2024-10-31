@@ -1,6 +1,6 @@
 from config.defaults import BENCHMARK_PATH, BENCHMARK_LABELS_FILE
 from validator.benchmark import Benchmark
-from estimator.speed import calculate_speed
+from estimator.speed import linear_speed
 from utils.fs import get_tracking, get_file_format_list, export_speed_results
 
 import os
@@ -53,7 +53,7 @@ def main(input_folder: str, output_folder: str):
         for vehicle in all_vehicles.values():
             vehicle_centers = vehicle['centers']
             vehicle_class = vehicle['class']
-            speed_estimation = calculate_speed(vehicle_centers)
+            speed_estimation = linear_speed(vehicle_centers)
             if speed_estimation is None:
                 continue
 

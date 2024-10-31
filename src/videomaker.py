@@ -7,7 +7,7 @@ from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
 from config.defaults import RESULTS_PATH, TRACK_COLORS
 from utils.fs import get_tracking
-from estimator.speed import calculate_speed
+from estimator.speed import linear_speed
 from calculate_speed import get_vehicles_dictionary, centroid
 
 
@@ -113,7 +113,7 @@ def draw_in_video(
                 cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
             if draw_labels:
                 cls = classes[int(object_data["class"])]
-                speed = calculate_speed(all_vehicles[object_id]['centers'])
+                speed = linear_speed(all_vehicles[object_id]['centers'])
                 out_speed_text = f"Speed: {speed} km/h " if speed else ""
                 cv2.putText(frame, f"{out_speed_text}ID: {object_id}, Cls: {cls}", (int(x1), int(y1) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
