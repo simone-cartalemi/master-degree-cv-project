@@ -7,8 +7,8 @@ from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
 from config.defaults import RESULTS_PATH, TRACK_COLORS
 from utils.fs import get_tracking
-from estimator.speed import linear_speed
-from calculate_speed import get_vehicles_dictionary, centroid
+from estimator.speed import linear_speed, centroid
+from calculate_speed import get_vehicles_dictionary
 
 
 def _get_last_seen_on_video(tracks: dict) -> dict:

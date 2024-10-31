@@ -1,20 +1,11 @@
 from config.defaults import BENCHMARK_PATH, BENCHMARK_LABELS_FILE
 from validator.benchmark import Benchmark
-from estimator.speed import linear_speed
+from estimator.speed import linear_speed, centroid
 from utils.fs import get_tracking, get_file_format_list, export_speed_results
 
 import os
 from argparse import ArgumentParser
 
-
-def centroid(bbox: list) -> tuple:
-    '''
-    Calculate center point of bounding box
-    '''
-    x1, y1, x2, y2 = bbox
-    center_x = (x1 + x2) // 2
-    center_y = (y1 + y2) // 2
-    return (center_x, center_y)
 
 def get_vehicles_dictionary(history: dict) -> dict:
     '''

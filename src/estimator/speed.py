@@ -4,6 +4,15 @@ import cv2
 from config.defaults import HOMOGRAPHY_MATRIX, CM_PER_PIXEL_RATIO, SPEED_WINDOW, VIDEO_FRAME_PER_SECOND
 
 
+def centroid(bbox: list) -> tuple:
+    '''
+    Calculate center point of bounding box
+    '''
+    x1, y1, x2, y2 = bbox
+    center_x = (x1 + x2) // 2
+    center_y = (y1 + y2) // 2
+    return (center_x, center_y)
+
 def remap_point(point: tuple = ()) -> tuple:
     '''
     Apply homography matrix to point
