@@ -1,31 +1,11 @@
-from config.defaults import BENCHMARK_PATH, BENCHMARK_LABELS_FILE
-from validator.benchmark import Benchmark
-from estimator.speed import calculate_speed
-from utils.fs import get_tracking, get_file_format_list, export_speed_results
-
 import os
 from argparse import ArgumentParser
 
-
-def get_vehicles_dictionary(history: dict) -> dict:
-    '''
-    For each vehicle in history frames, get vehicle class, last bounding box, all positions (centered in bounding box) and frame associated.
-    '''
-    all_vehicles = {}
-    for frame, objects in history.items():
-        for vehicle_id, vehicle in objects.items():
-            x1, y1, x2, y2 = vehicle['bbox']
-            center_x = (x1 + x2) // 2
-            center_y = (y1 + y2) // 2
-            obj_center = (center_x, center_y)
-            cls = int(vehicle['class'])
-
-            if vehicle_id not in all_vehicles:
-                all_vehicles[vehicle_id] = {'class': cls, 'centers': {}}
-
-            all_vehicles[vehicle_id]['centers'][int(frame)] = obj_center
-            all_vehicles[vehicle_id]['bbox'] = vehicle['bbox']
-    return all_vehicles
+from validator.benchmark import Benchmark
+from config.defaults import BENCHMARK_LABELS_FILE, BENCHMARK_PATH
+from estimator.speed import linear_speed
+from estimator.vehicles_manager import get_vehicles_dictionary
+from utils.fs import export_speed_results, get_file_format_list, get_tracking
 
 
 def main(input_folder: str, output_folder: str):
@@ -47,7 +27,7 @@ def main(input_folder: str, output_folder: str):
         for vehicle in all_vehicles.values():
             vehicle_centers = vehicle['centers']
             vehicle_class = vehicle['class']
-            speed_estimation = calculate_speed(vehicle_centers)
+            speed_estimation = linear_speed(vehicle_centers)
             if speed_estimation is None:
                 continue
 

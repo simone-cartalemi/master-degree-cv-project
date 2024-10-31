@@ -1,10 +1,11 @@
-from architectures.yolo import YOLO
+import os
+import pathlib
+import warnings
+
 import numpy as np
 import torch
 
-import warnings
-import pathlib
-import os
+from architectures.yolo import YOLO
 
 
 class YOLO5(YOLO):

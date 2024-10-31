@@ -1,7 +1,8 @@
-from dataset.dataset import Dataset
-
 import os
+
 import xml.etree.ElementTree as ET
+
+from dataset.dataset import Dataset
 
 
 class GramDataset(Dataset):

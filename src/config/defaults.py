@@ -1,5 +1,7 @@
-import numpy as np
 from enum import Enum
+
+import numpy as np
+
 
 class Model(Enum):
     V5_GRAM = "v5m_gram"
@@ -32,3 +34,16 @@ EMISSION_COEFFICIENTS = {
     "diesel": (0.00580262, 0.00063457, 6.4831E-06, -1.446E-07, 2.3284E-09, -1.71E-11, 5.0932E-14),
     "petrol": (0.01185506, 0.00034041, 1.2578E-06, 1.0459E-07, -7.213E-10, 6.0958E-12, 0)
 }
+
+TRACK_COLORS = [
+    (255, 0, 0),    # Rosso
+    (0, 255, 0),    # Verde
+    (0, 0, 255),    # Blu
+    (255, 255, 0),  # Giallo
+    (0, 255, 255),  # Ciano
+    (255, 0, 255),  # Magenta
+    (128, 0, 0),    # Marrone
+    (0, 128, 0),    # Verde scuro
+    (0, 0, 128),    # Blu scuro
+    (128, 128, 0)   # Verde oliva
+]

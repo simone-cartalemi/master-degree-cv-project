@@ -1,8 +1,17 @@
-import numpy as np
 import cv2
+import numpy as np
 
 from config.defaults import HOMOGRAPHY_MATRIX, CM_PER_PIXEL_RATIO, SPEED_WINDOW, VIDEO_FRAME_PER_SECOND
 
+
+def centroid(bbox: list) -> tuple:
+    '''
+    Calculate center point of bounding box
+    '''
+    x1, y1, x2, y2 = bbox
+    center_x = (x1 + x2) // 2
+    center_y = (y1 + y2) // 2
+    return (center_x, center_y)
 
 def remap_point(point: tuple = ()) -> tuple:
     '''
@@ -28,7 +37,7 @@ def frame_to_kmph(initial_point: tuple, final_point: tuple, frames_difference: i
     speed = (3.6 * distance_meters) / secs
     return round(speed, 2)
 
-def calculate_speed(positions: dict, instant_treshold: int = 60) -> float|None:
+def linear_speed(positions: dict, instant_treshold: int = 60) -> float|None:
     '''
     Calculate the vehicle speed between initial and final position (linear mean)
     Appearances shorter than instant_treshold will be discarded
