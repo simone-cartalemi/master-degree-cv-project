@@ -1,16 +1,12 @@
-from architectures.yolo_v5m import YOLO5
-from architectures.yolo_v8s import YOLO8
-
 import datetime
 import os
 from argparse import ArgumentParser
 
 import cv2
-
 from sort.sort import Sort
 
-from dataset.gram_rtm import GramDataset
-from dataset.mio_tcd import MioDataset
+from architectures.yolo_v5m import YOLO5
+from architectures.yolo_v8s import YOLO8
 from config.defaults import (
     Model,
     MASK_PATH,
@@ -20,7 +16,9 @@ from config.defaults import (
     VIDEO_FORMAT,
     RESULTS_PATH
 )
-from utils.fs import get_file_format_list, export_tracking_results
+from dataset.gram_rtm import GramDataset
+from dataset.mio_tcd import MioDataset
+from utils.fs import export_tracking_results, get_file_format_list
 
 
 def get_vehicles_position(yolo, tracker, frame):
