@@ -31,7 +31,7 @@ def get_tracking(tracking_path: str) -> dict:
         return json.load(f)
 
 
-def export_speed_results(folder_path: str, name: str, header: list, data: list) -> None:
+def export_csv_lines(folder_path: str, name: str, header: list, data: list) -> None:
     os.makedirs(folder_path, exist_ok=True)
     with open(os.path.join(folder_path, name + ".csv"), mode='w', newline='') as file:
         writer = csv.writer(file)
