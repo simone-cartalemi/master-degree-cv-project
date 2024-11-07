@@ -165,3 +165,41 @@ I comandi sono
 Nel caso in cui sia necessario creare la matrice omografica per un nuovo dataset di benchmarking o per un video su cui eseguire gli script, sono stati aggiunti al progetto dei notebook Jupyter che si occuperanno della generazione [automatica](notebooks/homography/homography_by_sift.ipynb) tramite SIFT (se le immagini soddisfano certi requisiti) oppure tramite generazione [manuale](notebooks/homography/manual_homography.ipynb), come per il caso del dataset thailandese.
 
 Un ulteriore [notebook](notebooks/homography/verifier_matrix.ipynb) aiuterà a verificare la correttezza della matrice generata, visualizzando la trasformazione e il remapping dei punti.
+
+
+#### Fase 4: Esecuzione degli script
+Gli script descritti di seguito sono da eseguire sequenzialmente. Essi esporteranno i risultati nella cartella `results/`.
+
+1.  Tracking.
+
+    Lo script di tracking supporta sia un singolo file che un'intera cartella di video.
+    Ecco alcuni comandi di esempio per lanciare lo script
+    ```sh
+    python ./src/track_vehicles.py v5m_gram "./datasets/thai/Videos/IMG_0606.MOV" -v
+
+    python ./src/track_vehicles.py v5m_mio "./datasets/thai/Videos/IMG_0606.MOV" -v
+
+    python ./src/track_vehicles.py v8s_mio "./datasets/thai/Videos" -v
+    ```
+    
+2.  Speed estimation.
+
+    Lo script prende in input la cartella di origine dei `json` esportati dal precedente script, e la cartella di destinazione. Qui di seguito un esempio.
+    ```sh
+    python ./src/calculate_speed.py "./results/tracks/v8s_mio_2024-09-26_10-05-16/" "./results/speed/v8s_mio_2024-09-26_10-05-16/" -b
+    ```
+    
+3.  Emissioni.
+
+    Lo script di calcolo delle emissioni supporta sia un singolo file che un'intera cartella di video.
+    Ecco un comando di esempio per lanciare lo script
+    ```sh
+    python ./src/export_pollution.py "./results/speed/v8s_mio_2024-09-26_10-05-16/" -v
+    ```
+
+4.  Visualizzare i risultati
+
+    Per visualizzare un video con tracking, bounding box, labels e altro, eseguire il comando seguente con i relativi setting desiderati.
+    ```sh
+    python ./src/videomaker.py "./datasets/thai/Videos/IMG_0606.MOV" "results/tracks/v8s_mio_2024-09-26_10-05-16/IMG_0606.json" -t -b
+    ```
