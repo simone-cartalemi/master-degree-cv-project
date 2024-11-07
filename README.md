@@ -123,6 +123,17 @@ maseter-degree-cv-project/
 
     > È stato predisposto il file `requirements.txt`, ma potrebbe essere specifico per il sistema operativo utilizzato, si consiglia comunque di controllare i pacchetti necessari.
 
+4.  Scaricare il modulo SORT.
+
+    Modulo non integrato in questo progetto è quello di tracciamento chiamato *SORT*. È stato utilizzato un [progetto esterno](https://github.com/abewley/sort) sviluppato da un utente di GitHub, che è necessario clonare all'interno della cartella [src/](src/) per permettere all'apposito script di tracciare i veicoli.
+    Installare anche le dipendenze del progetto come suggerito nel README, tenendo conto di eventuali aggiornamenti degli stessi. Eseguire
+    ```sh
+    # lap è stato cambiato in lapx
+    pip install lapx filterpy scikit-image
+    ```
+
+    È possibile integrare qualsiasi altro modulo dedicato al tracciamento, purché si mantenga la logica di quello utilizzato, al fine di mantenere la compatibilità dell'intero sistema. L'unico script che ne richiama le funzioni è [track_vehicles.py](src/track_vehicles.py).
+
 
 #### Fase 2: Addestramento modelli
 > Per addestrare i modelli è consigliato seguire le indicazioni da documentazione ufficiale.
