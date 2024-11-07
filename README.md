@@ -122,3 +122,29 @@ maseter-degree-cv-project/
     Dopo aver creato l'ambiente per Python, installare manualmente YOLO seguendo la [guida apposita](manuals/Yolo%20by%20ultralytics.md).
 
     > È stato predisposto il file `requirements.txt`, ma potrebbe essere specifico per il sistema operativo utilizzato, si consiglia comunque di controllare i pacchetti necessari.
+
+
+#### Fase 2: Addestramento modelli
+> Per addestrare i modelli è consigliato seguire le indicazioni da documentazione ufficiale.
+
+Si raccomandano alcuni accorginemti essenziali:
+-   Per addestrare il modello *YOLO v5* è necessario aver clonato il repository come descritto nella fase precedente; per il modello *YOLO v8* è necessario aver installato il pacchetto all'interno dell'ambiente virtuale di Python.
+-   Scegliere i parametri (*batch*, *epochs*, *imgsz*, etc) in maniera adeguata.
+-   È necessario controllare la correttezza dei path all'interno dei file `.yaml` all'interno della cartella [detection](detection/) prima di avviare la fase di training. Alcuni comandi utilizzati sono quelli all'interno degli script di shell nella stessa cartella.
+-   Potrebbe essere necessario dover silenziare i warning generati durante l'esecuzione del training del modello *YOLO v5*. Aggiungere all'interno del file `train.py` (se il repository è stato già clonato si troverà in [src/yolov5/train.py](src/yolov5/train.py)) le seguenti righe più o meno all'inizio del file
+    ```python
+    import warnings
+    warnings.filterwarnings("ignore", category=FutureWarning)
+    ```
+
+-   Potrebbe essere necessario dover cambiare il path di `settings.yaml` se l'esecuzione del training del modello *YOLO v8* lo richiede. Cambiare la variabile `datasets_dir: /path/to/master-degree-cv-project` impostando il path corretto alla cartella del progetto.
+-   Su ambiente Linux (da remoto con SSH) è consigliato l'utilizzo di **Screen**, che serve a mantenere attività in background, assicurandone la non interruzione alla chiusura della sessione.
+I comandi sono
+    ```sh
+    # Avvia la sessione
+    screen
+    
+    # Riprendi la sessione
+    screen -r
+    ```
+    Digitando i tasti `Ctrl+A` e `D` sarà fatto il detach della sessione, lasciandola in esecuzione.
