@@ -148,3 +148,9 @@ I comandi sono
     screen -r
     ```
     Digitando i tasti `Ctrl+A` e `D` sarà fatto il detach della sessione, lasciandola in esecuzione.
+
+
+#### Fase 3: Creazione matrice omografica
+Nel caso in cui sia necessario creare la matrice omografica per un nuovo dataset di benchmarking o per un video su cui eseguire gli script, sono stati aggiunti al progetto dei notebook Jupyter che si occuperanno della generazione [automatica](notebooks/homography/homography_by_sift.ipynb) tramite SIFT (se le immagini soddisfano certi requisiti) oppure tramite generazione [manuale](notebooks/homography/manual_homography.ipynb), come per il caso del dataset thailandese.
+
+Un ulteriore [notebook](notebooks/homography/verifier_matrix.ipynb) aiuterà a verificare la correttezza della matrice generata, visualizzando la trasformazione e il remapping dei punti.
