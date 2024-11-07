@@ -83,8 +83,7 @@ maseter-degree-cv-project/
 │   ├── export_pollutions.py        # Script di conversione velocità in stime di emissione
 │   ├── split.py                    # Script di separazione dataset in train e test
 │   ├── track_vehicles.py           # Script generatore di tracce veicoli dei video
-│   ├── videomaker.py               # Script di creazione video dimostrativi
-│   └── ########.py
+│   └── videomaker.py               # Script di creazione video dimostrativi
 ├── tutorial.ipynb                  # Notebook Jupyter dimostrativo di utilizzo
 └── requirements.txt
 ```
