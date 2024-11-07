@@ -1,4 +1,3 @@
-[comment]: <> (TODO: Rivedere se è possibile utilizzare un solo kernel)
 # Installare YOLO v5 e YOLO v8
 
 Esistono diversi modi per installare le diverse versioni di **YOLO** by Ultralytics. Le versioni principali utilizzate sono la versione 5 e la versione 8.

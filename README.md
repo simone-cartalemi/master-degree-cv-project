@@ -88,3 +88,37 @@ maseter-degree-cv-project/
 ├── tutorial.ipynb                  # Notebook Jupyter dimostrativo di utilizzo
 └── requirements.txt
 ```
+
+---
+
+
+### Istruzioni per l'utilizzo
+
+#### Fase 1: Preparazione dataset, modelli e venv
+1.  Scaricare i dataset di addestramento.
+
+    Seguendo il manuale [Prepare dataset](manuals/Prepare%20dataset.md) scaricare i dataset e riorganizzarli come descritto dalla struttura delle cartelle e convertire le label per l'addestramento.
+
+    Utilizzando i comandi descritti nella [guida](manuals/Prepare%20dataset.md) saranno effettuati in automatico il download, la gestione e il labeling dei datasets (assicurarsi che i link siano corretti).
+
+2.  Scaricare e organizzare il dataset di benchmarking.
+
+    > Il dataset thailandese discusso e utilizzato è disponibile su [Google Drive](https://drive.google.com/drive/u/1/folders/12F7AlJiv2AMiJ1DZ4PiOlAZlEXzSUPS7) a carico degli autori del relativo [paper](https://ieeexplore.ieee.org/abstract/document/10381710), quindi potrebbe non essere rintracciabile in futuro.
+
+    Il modo più rapido e affidabile di scaricarlo è utilizzando Google Colab con accesso al proprio account Google e autorizzazioni ad interfacciarsi con esso. Il [notebook](notebooks/datasets/create%20benchmarking%20video%20archive%20drive.ipynb) è stato scritto per aiutare questo processo, creando un unico file zip di 15 GB sul proprio archivio e dando la possibilità di essere scaricato rendendolo condiviso a chiunque abbia accesso al relativo link.
+    Eseguire le istruzioni del notebook su Google Colab, rendere il file generato condivisibile e scaricare tramite pacchetto Python `gdown`.
+    
+    Estrarre il contenuto dell'archivio mediante il comando
+    ```sh
+    unzip Videos.zip -d ./dataset/thai/
+    ```
+
+    In alternativa è possibile creare un proprio dataset di video, configurando il file delle [variabili di benchmarking](src/config/defaults.py) e creando la [matrice di omografia](notebooks/homography/manual_homography.ipynb).
+
+3.  Configurare l'ambiente Python.
+
+    Per sfruttare la potenza di calcolo della GPU e utilizzare i driver CUDA su scheda grafica NVIDIA è necessaro seguire la [guida](manuals/CUDA%20on%20Windows.md). Lo script è specifico per sistema operativo Windows, ma può essere adattato anche su altri sistemi.
+
+    Dopo aver creato l'ambiente per Python, installare manualmente YOLO seguendo la [guida apposita](manuals/Yolo%20by%20ultralytics.md).
+
+    > È stato predisposto il file `requirements.txt`, ma potrebbe essere specifico per il sistema operativo utilizzato, si consiglia comunque di controllare i pacchetti necessari.
