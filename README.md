@@ -71,7 +71,7 @@ maseter-degree-cv-project/
 │   │   └── Classi di supporto contenenti funzioni utilizzate
 │   ├── sort/
 │   │   └── Repository esterno      # https://github.com/abewley/sort
-│   ├── utils/
+│   ├── util/
 │   │   └── Script di gestione contenuti esterni al progetto (file system)
 │   ├── validator/
 │   │   └── Classi di validazione dei risultati (benchmarking)

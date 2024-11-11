@@ -2,7 +2,7 @@ import os
 from argparse import ArgumentParser
 
 from estimator.pollution import rearrange_speed_results, pollution_trend
-from utils.fs import export_csv_lines, get_csv_lines, get_file_format_list
+from util.fs import export_csv_lines, get_csv_lines, get_file_format_list
 
 
 def main(resource_path: str, output_folder: str, verbose: bool = False):

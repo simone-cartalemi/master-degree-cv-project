@@ -5,7 +5,7 @@ from validator.benchmark import Benchmark
 from config.defaults import BENCHMARK_LABELS_FILE, BENCHMARK_PATH
 from estimator.speed import linear_speed
 from estimator.vehicles_manager import get_vehicles_dictionary
-from utils.fs import export_csv_lines, get_file_format_list, get_tracking
+from util.fs import export_csv_lines, get_file_format_list, get_tracking
 
 
 def main(input_folder: str, output_folder: str, benchmarking_labels: bool = False, verbose: bool = False):

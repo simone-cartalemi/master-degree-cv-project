@@ -1,5 +1,5 @@
 from config.defaults import VALIDATION_WINDOW
-from utils.fs import get_csv_lines
+from util.fs import get_csv_lines
 
 
 class Benchmark():

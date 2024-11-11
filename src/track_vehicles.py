@@ -18,7 +18,7 @@ from config.defaults import (
 )
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
-from utils.fs import export_tracking_results, get_file_format_list
+from util.fs import export_tracking_results, get_file_format_list
 
 
 def get_vehicles_position(yolo, tracker, frame):
