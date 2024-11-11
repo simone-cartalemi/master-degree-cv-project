@@ -21,7 +21,7 @@ class Benchmark():
         '''
         Check if the vehicle history matches the benchmark history (must be at the same place in the same frame number)
         '''
-        gt_video = self.ground_truth[name_video]
+        gt_video = self.ground_truth.get(name_video, [])
         if not len(gt_video):
             return None
         min_vehicle_f, max_vehicle_f = self.get_apparition_frames(vehicle_history)
