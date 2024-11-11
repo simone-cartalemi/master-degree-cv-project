@@ -8,7 +8,7 @@ from estimator.vehicles_manager import get_vehicles_dictionary
 from utils.fs import export_csv_lines, get_file_format_list, get_tracking
 
 
-def main(input_folder: str, output_folder: str, benchmarking_labels: bool = False):
+def main(input_folder: str, output_folder: str, benchmarking_labels: bool = False, verbose: bool = False):
     results_list = get_file_format_list(input_folder, ".json")
     print(f"There are {len(results_list)} tracked videos")
 
@@ -17,7 +17,8 @@ def main(input_folder: str, output_folder: str, benchmarking_labels: bool = Fals
 
     for video_file in results_list:
         video_name = os.path.splitext(os.path.basename(video_file))[0]
-        print(f"Processing {video_name}")
+        if verbose:
+            print(f"Exporting speed estimation results in {video_name}")
         video_tracks_path = os.path.join(input_folder, video_file)
 
         exporting_data = []
@@ -43,7 +44,8 @@ if __name__ == "__main__":
     parser.add_argument("input_folder_path", type=str, help="Path of videos' track json file")
     parser.add_argument("output_folder_path", type=str, help="Path of output folder")
     parser.add_argument("-b", "--benchmark", action="store_true", help="Add benchmarking to results")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Print output")
 
     args = parser.parse_args()
 
-    main(args.input_folder_path, args.output_folder_path, args.benchmark)
+    main(args.input_folder_path, args.output_folder_path, args.benchmark, args.verbose)

@@ -185,7 +185,7 @@ Gli script descritti di seguito sono da eseguire sequenzialmente. Essi esportera
 
     Lo script prende in input la cartella di origine dei `json` esportati dal precedente script, e la cartella di destinazione. Qui di seguito un esempio.
     ```sh
-    python ./src/calculate_speed.py "./results/tracks/v8s_mio_2024-09-26_10-05-16/" "./results/speed/v8s_mio_2024-09-26_10-05-16/" -b
+    python ./src/calculate_speed.py "./results/tracks/v8s_mio_2024-09-26_10-05-16/" "./results/speed/v8s_mio_2024-09-26_10-05-16/" -b -v
     ```
     
 3.  Emissioni.
