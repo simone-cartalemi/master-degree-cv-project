@@ -193,7 +193,7 @@ Gli script descritti di seguito sono da eseguire sequenzialmente. Essi esportera
     Lo script di calcolo delle emissioni supporta sia un singolo file che un'intera cartella di video.
     Ecco un comando di esempio per lanciare lo script
     ```sh
-    python ./src/export_pollution.py "./results/speed/v8s_mio_2024-09-26_10-05-16/" -v
+    python ./src/export_pollutions.py "./results/speed/v8s_mio_2024-09-26_10-05-16/" "./results/pollution/v8s_mio_2024-09-26_10-05-16/" -v
     ```
 
 4.  Visualizzare i risultati
