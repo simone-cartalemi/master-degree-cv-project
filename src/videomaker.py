@@ -122,4 +122,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(args.video_path, args.video_tracks_path, args.dataset, args.labels, args.bndbox, args.tracks)
+    main(args.video_path, args.video_tracks_path, args.dataset, args.no_labels, args.bnd_box, args.tracks)
