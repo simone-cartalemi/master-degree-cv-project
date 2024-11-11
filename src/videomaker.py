@@ -18,10 +18,12 @@ def draw_in_video(
         classes: list,
         draw_labels: bool,
         draw_bndbox: bool,
-        draw_tracks: bool
+        draw_tracks: bool,
+        verbose: bool
 ):
     video_name = os.path.basename(video_path)
-    print(f"Processing and exporting: {video_name}")
+    if verbose:
+        print(f"Processing and exporting: {video_name}")
 
     # Process vehicles data
     all_vehicles = get_vehicles_dictionary(history)
@@ -41,8 +43,8 @@ def draw_in_video(
 
     frame_number = 1
     while video_reader.isOpened() and frame_number <= total_frames:
-        if frame_number % 120 == 0:
-            print(f"{frame_number}/{total_frames}\t{frame_number // 120} s")
+        if verbose and frame_number % 120 == 0:
+            print(f"frame {frame_number}/{total_frames}\t\t{frame_number // 120} s")
 
         ret, frame = video_reader.read()
         if not ret:
@@ -81,7 +83,8 @@ def main(
         dataset: str = "mio",
         draw_labels: bool = True,
         draw_bndbox: bool = False,
-        draw_tracks: bool = False
+        draw_tracks: bool = False,
+        verbose: bool = False
 ):
     if os.path.isdir(video_path):
         print("First argument must be a video file, not a folder")
@@ -106,7 +109,7 @@ def main(
     output_folder = os.path.join(RESULTS_PATH, "videos/")
     os.makedirs(output_folder, exist_ok=True)
 
-    draw_in_video(video_path, history, output_folder, classes, draw_labels, draw_bndbox, draw_tracks)
+    draw_in_video(video_path, history, output_folder, classes, draw_labels, draw_bndbox, draw_tracks, verbose)
 
 
 # TODO: verbose parametro
@@ -119,7 +122,8 @@ if __name__ == "__main__":
     parser.add_argument("-t", "--tracks", action="store_true", help="Show vehicles track")
     parser.add_argument("-b", "--bnd-box", action="store_true", help="Show vehicles bounding box")
     parser.add_argument("-nl", "--no-labels", action="store_false", help="Hide vehicles details")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Print output")
 
     args = parser.parse_args()
 
-    main(args.video_path, args.video_tracks_path, args.dataset, args.no_labels, args.bnd_box, args.tracks)
+    main(args.video_path, args.video_tracks_path, args.dataset, args.no_labels, args.bnd_box, args.tracks, args.verbose)

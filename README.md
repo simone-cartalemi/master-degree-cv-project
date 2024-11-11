@@ -200,5 +200,5 @@ Gli script descritti di seguito sono da eseguire sequenzialmente. Essi esportera
 
     Per visualizzare un video con tracking, bounding box, labels e altro, eseguire il comando seguente con i relativi setting desiderati.
     ```sh
-    python ./src/videomaker.py "./datasets/thai/Videos/IMG_0606.MOV" "results/tracks/v8s_mio_2024-09-26_10-05-16/IMG_0606.json" -t -b
+    python ./src/videomaker.py "./datasets/thai/Videos/IMG_0606.MOV" "results/tracks/v8s_mio_2024-09-26_10-05-16/IMG_0606.json" -b -t -v
     ```
