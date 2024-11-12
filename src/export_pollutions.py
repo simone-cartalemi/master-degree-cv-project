@@ -25,7 +25,7 @@ def main(resource_path: str, verbose: bool = False):
         result_path = os.path.join(folder_path, video_file)
         results = get_csv_lines(result_path)
         all_estimation_data = rearrange_speed_results(results)
-        cumulative_pollution = pollution_trend(all_estimation_data[video_name])
+        cumulative_pollution = pollution_trend(all_estimation_data.get(video_name, []))
 
         export_csv_lines(output_folder, video_name, ["vehicle in frame", "frame pollution"], cumulative_pollution)
 
