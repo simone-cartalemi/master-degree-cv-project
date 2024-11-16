@@ -6,7 +6,7 @@ from tqdm import tqdm
 from dataset.gram_rtm import GramDataset
 from dataset.mio_tcd import MioDataset
 
-from utils.fs import save_labels
+from util.fs import save_labels
 
 
 def yolo_format(image_path, objs):

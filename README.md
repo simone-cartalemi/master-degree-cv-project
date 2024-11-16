@@ -71,7 +71,7 @@ maseter-degree-cv-project/
 │   │   └── Classi di supporto contenenti funzioni utilizzate
 │   ├── sort/
 │   │   └── Repository esterno      # https://github.com/abewley/sort
-│   ├── utils/
+│   ├── util/
 │   │   └── Script di gestione contenuti esterni al progetto (file system)
 │   ├── validator/
 │   │   └── Classi di validazione dei risultati (benchmarking)
@@ -84,7 +84,7 @@ maseter-degree-cv-project/
 │   ├── split.py                    # Script di separazione dataset in train e test
 │   ├── track_vehicles.py           # Script generatore di tracce veicoli dei video
 │   └── videomaker.py               # Script di creazione video dimostrativi
-├── tutorial.ipynb                  # Notebook Jupyter dimostrativo di utilizzo
+├── test.py                         # File script di test
 └── requirements.txt
 ```
 
@@ -185,7 +185,7 @@ Gli script descritti di seguito sono da eseguire sequenzialmente. Essi esportera
 
     Lo script prende in input la cartella di origine dei `json` esportati dal precedente script, e la cartella di destinazione. Qui di seguito un esempio.
     ```sh
-    python ./src/calculate_speed.py "./results/tracks/v8s_mio_2024-09-26_10-05-16/" "./results/speed/v8s_mio_2024-09-26_10-05-16/" -b
+    python ./src/calculate_speed.py "./results/tracks/v8s_mio_2024-09-26_10-05-16/" -b -v
     ```
     
 3.  Emissioni.
@@ -193,12 +193,12 @@ Gli script descritti di seguito sono da eseguire sequenzialmente. Essi esportera
     Lo script di calcolo delle emissioni supporta sia un singolo file che un'intera cartella di video.
     Ecco un comando di esempio per lanciare lo script
     ```sh
-    python ./src/export_pollution.py "./results/speed/v8s_mio_2024-09-26_10-05-16/" -v
+    python ./src/export_pollutions.py "./results/speed/v8s_mio_2024-09-26_10-05-16/" -v
     ```
 
 4.  Visualizzare i risultati
 
     Per visualizzare un video con tracking, bounding box, labels e altro, eseguire il comando seguente con i relativi setting desiderati.
     ```sh
-    python ./src/videomaker.py "./datasets/thai/Videos/IMG_0606.MOV" "results/tracks/v8s_mio_2024-09-26_10-05-16/IMG_0606.json" -t -b
+    python ./src/videomaker.py "./datasets/thai/Videos/IMG_0606.MOV" "results/tracks/v8s_mio_2024-09-26_10-05-16/IMG_0606.json" -b -t -v
     ```

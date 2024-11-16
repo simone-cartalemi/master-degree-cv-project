@@ -26,7 +26,7 @@ MASK_PATH = "datasets/thai/masks/ROI_last.png"   # ROI_all.png
 HOMOGRAPHY_MATRIX = np.load("homography/matrixes/thai_hom_matrix_last.npy")
 CM_PER_PIXEL_RATIO = 300 / 69
 VALIDATION_WINDOW = (800, 1070)
-SPEED_WINDOW = (200, 800)
+SPEED_WINDOW = (300, 800)
 
 RESULTS_PATH = "results/"
 

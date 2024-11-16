@@ -5,13 +5,13 @@ Esistono diversi modi per installare le diverse versioni di **YOLO** by Ultralyt
 
 ## Setup della versione 5
 
-All'interno della cartella `src/` clonare il repository ufficiale:
+All'interno della cartella principale clonare il repository ufficiale:
 ```sh
-git clone https://github.com/ultralytics/yolov5
+git clone https://github.com/ultralytics/yolov5 ./src/yolov5/
 ```
 Dopo aver preparato e attivato il virtual enviroment `.venv` come descritto in questa ([guida](./CUDA%20on%20Windows.md)) installare le dipendenze mediante il comando
 ```sh
-pip install -r src/yolov5/requirements.txt
+pip install -r ./src/yolov5/requirements.txt
 ```
 
 Per controllare che tutto sia stato installato correttamente e verificare il dispositivo su cui saranno eseguiti i calcoli (CPU o GPU) lanciare i comandi
