@@ -6,7 +6,7 @@ from estimator.pollution import rearrange_speed_results, pollution_trend
 from util.fs import export_csv_lines, get_csv_lines, get_file_format_list
 
 
-def main(resource_path: str, verbose: bool = False):
+def main(resource_path: str, verbose: bool = False) -> str:
     if os.path.isdir(resource_path):
         folder_path = resource_path + "/"
         speed_result_list = get_file_format_list(folder_path, ".csv")
@@ -28,6 +28,8 @@ def main(resource_path: str, verbose: bool = False):
         cumulative_pollution = pollution_trend(all_estimation_data.get(video_name, []))
 
         export_csv_lines(output_folder, video_name, ["vehicle in frame", "frame pollution"], cumulative_pollution)
+
+    return output_folder
 
 
 if __name__ == "__main__":

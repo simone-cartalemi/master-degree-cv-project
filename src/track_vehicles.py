@@ -71,7 +71,7 @@ def detect_video(video_path, yolo, mask, verbose: bool) -> list:
     return history
 
 
-def main(resource_path: str, model: str, verbose: bool = False):
+def main(resource_path: str, model: str, verbose: bool = False) -> str:
     if os.path.isdir(resource_path):
         folder_path = resource_path
         video_list = get_file_format_list(folder_path, VIDEO_FORMAT)
@@ -108,6 +108,8 @@ def main(resource_path: str, model: str, verbose: bool = False):
         history = detect_video(video_path, yolo, mask, verbose)
 
         export_tracking_results(output_folder, os.path.splitext(video_file)[0], history)
+
+    return output_folder
 
 
 if __name__ == "__main__":

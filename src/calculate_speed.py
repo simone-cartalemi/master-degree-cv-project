@@ -8,7 +8,7 @@ from estimator.vehicles_manager import get_vehicles_dictionary
 from util.fs import export_csv_lines, get_file_format_list, get_tracking
 
 
-def main(resource_path: str, benchmarking_labels: bool = False, verbose: bool = False):
+def main(resource_path: str, benchmarking_labels: bool = False, verbose: bool = False) -> str:
     if os.path.isdir(resource_path):
         folder_path = resource_path + "/"
         traks_result_list = get_file_format_list(folder_path, ".json")
@@ -46,6 +46,8 @@ def main(resource_path: str, benchmarking_labels: bool = False, verbose: bool = 
             exporting_data.append([video_file.rsplit('.', 1)[0], min_f, max_f, vehicle_class, speed_estimation, benchmark_speed])
 
         export_csv_lines(output_folder, os.path.splitext(video_file)[0], ["File video", "min Frame", "max Frame", "vehicle class", "calculated speed", "ground thrut"], exporting_data)
+
+    return output_folder
 
 
 if __name__ == "__main__":
