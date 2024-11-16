@@ -84,7 +84,7 @@ maseter-degree-cv-project/
 │   ├── split.py                    # Script di separazione dataset in train e test
 │   ├── track_vehicles.py           # Script generatore di tracce veicoli dei video
 │   └── videomaker.py               # Script di creazione video dimostrativi
-├── tutorial.ipynb                  # Notebook Jupyter dimostrativo di utilizzo
+├── test.py                         # File script di test
 └── requirements.txt
 ```
 
