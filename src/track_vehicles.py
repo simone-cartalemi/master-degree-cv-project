@@ -97,6 +97,8 @@ def main(resource_path: str, model: str, verbose: bool = False) -> str:
     elif model == Model.V8_MIO:
         ds = MioDataset()
         yolo = YOLO8(V8_MIO_WEIGHTS_PATH, ds.VEHICLE_CLASSES)
+    else:
+        raise ValueError("Not valid input: unknow model")
 
     # Import mask
     roi_mask = cv2.imread(MASK_PATH, cv2.IMREAD_GRAYSCALE)
