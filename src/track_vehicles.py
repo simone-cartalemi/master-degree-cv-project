@@ -71,7 +71,7 @@ def detect_video(video_path, yolo, mask, verbose: bool) -> list:
     return history
 
 
-def main(resource_path: str, model: str, verbose: bool = False) -> str:
+def main(resource_path: str, model: Model, folder_name: str = "", verbose: bool = False) -> str:
     if os.path.isdir(resource_path):
         folder_path = resource_path
         video_list = get_file_format_list(folder_path, VIDEO_FORMAT)
@@ -80,9 +80,10 @@ def main(resource_path: str, model: str, verbose: bool = False) -> str:
         video_file = os.path.basename(resource_path)
         video_list = [video_file]
 
-    # Timestamp
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    output_folder = os.path.join(RESULTS_PATH, "tracks", str(model) + "_" + timestamp)
+    # Folder output name
+    if folder_name == "":
+        folder_name = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    output_folder = os.path.join(RESULTS_PATH, "tracks", str(model) + "_" + folder_name)
     print(f"Results in dir: {output_folder}")
 
     # Detect with selected model
@@ -118,7 +119,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("model", type=Model, choices=list(Model), help="Model name for detecting")
     parser.add_argument("resource_path", type=str, help="Path of input video or videos' folder")
+    parser.add_argument("-n", "--folder-name", type=str, default="", help="Output folder name")
     parser.add_argument("-v", "--verbose", action="store_true", help="Print output")
 
     args = parser.parse_args()
-    main(args.resource_path, args.model, args.verbose)
+    main(args.resource_path, args.model, args.folder_name, args.verbose)
